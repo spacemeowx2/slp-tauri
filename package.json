@@ -7,13 +7,11 @@
     "watch": "parcel -p 4000 src/index.html"
   },
   "dependencies": {
+    "98.css": "^0.1.16",
     "@types/react": "^16.9.13",
     "@types/react-dom": "^16.9.4",
     "@typescript-eslint/eslint-plugin": "^2.9.0",
     "@typescript-eslint/parser": "^2.9.0",
-    "parcel": "^1.12.4",
-    "tauri": "^0.6.2",
-    "typescript": "^3.9.3",
     "eslint": "^6.7.1",
     "eslint-config-react-app": "^5.0.2",
     "eslint-plugin-flowtype": "^4.5.2",
@@ -23,7 +21,10 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
-    "preact": "^10.0.5"
+    "parcel": "^1.12.4",
+    "preact": "^10.0.5",
+    "tauri": "^0.6.2",
+    "typescript": "^3.9.3"
   },
   "alias": {
     "react": "preact/compat",
