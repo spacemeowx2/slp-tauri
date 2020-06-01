@@ -1,0 +1,13 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "watch": "parcel -p 4000 src/index.html"
+  },
+  "dependencies": {
+    "parcel": "^1.12.4",
+    "tauri": "^0.6.2"
+  }
+}
