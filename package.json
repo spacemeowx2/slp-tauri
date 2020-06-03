@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "watch": "parcel -p 4000 src/index.html"
+    "watch": "parcel -p 4000 src/index.html",
+    "build": "parcel build src/index.html --public-url ./"
   },
   "dependencies": {
     "98.css": "^0.1.16",
