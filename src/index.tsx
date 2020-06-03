@@ -1,12 +1,15 @@
 import React from 'react'
 import { render } from 'react-dom'
-import './css'
+import { ThemeProvider, Theme } from './css'
 import { Tabs } from './components/Tabs'
+import { useInput } from './hooks'
+import { Select } from './components/Select'
 
 const Index: React.FC = () => {
   const [ count, setCount ] = React.useState(0)
+  const [ theme, themeProps ] = useInput<string>('xp')
 
-  return <>
+  return <ThemeProvider theme={theme as Theme}>
     <div style={{ height: '100%', margin: '0'}} className='window'>
       <div className='title-bar'>
         <div className='title-bar-text'>Switch Lan Play</div>
@@ -27,12 +30,16 @@ const Index: React.FC = () => {
             </div>
           </Tabs.Item>
           <Tabs.Item id='Proxy'>
-          <p>You can set proxy here</p>
+            <p>You can set proxy here</p>
+          </Tabs.Item>
+          <Tabs.Item id='Settings'>
+            <label>Select a theme</label>
+            <Select options={['98', 'xp']} {...themeProps}/>
           </Tabs.Item>
         </Tabs>
       </div>
     </div>
-  </>
+  </ThemeProvider>
 }
 
 render(<Index />, document.body)
