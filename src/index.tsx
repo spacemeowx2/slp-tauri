@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import '98.css'
+import './css'
 
 const Index: React.FC = () => {
   const [ count, setCount ] = React.useState(0)
