@@ -9655,6 +9655,11 @@ xmlchars@^2.1.1, xmlchars@^2.2.0:
   resolved "https://registry.npm.taobao.org/xmlchars/download/xmlchars-2.2.0.tgz#060fe1bcb7f9c76fe2a17db86a9bc3ab894210cb"
   integrity sha1-Bg/hvLf5x2/ioX24apvDq4lCEMs=
 
+xp.css@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.npm.taobao.org/xp.css/download/xp.css-0.2.3.tgz#53de0ba7bdd657aaae36cd70e46ba265d7c9d840"
+  integrity sha1-U94Lp73WV6quNs1w5GuiZdfJ2EA=
+
 xregexp@^4.3.0:
   version "4.3.0"
   resolved "https://registry.npm.taobao.org/xregexp/download/xregexp-4.3.0.tgz?cache=0&sync_timestamp=1581429604132&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fxregexp%2Fdownload%2Fxregexp-4.3.0.tgz#7e92e73d9174a99a59743f67a4ce879a04b5ae50"

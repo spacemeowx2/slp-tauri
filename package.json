@@ -25,7 +25,8 @@
     "parcel": "^2.0.0-nightly.277",
     "preact": "^10.0.5",
     "tauri": "^0.6.2",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.3",
+    "xp.css": "^0.2.3"
   },
   "alias": {
     "react": "preact/compat",
