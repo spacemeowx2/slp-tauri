@@ -3,27 +3,25 @@
   windows_subsystem = "windows"
 )]
 
+mod async_handler;
 mod cmd;
+
+use serde_json::json;
+use async_handler::AppBuilderExt;
 
 fn main() {
   tauri::AppBuilder::new()
-    .invoke_handler(|_webview, arg| {
+    .async_handler(|cmd: cmd::Cmd| async {
       use cmd::Cmd::*;
-      match serde_json::from_str(arg) {
-        Err(e) => {
-          Err(e.to_string())
+      Ok(match cmd {
+        MyCustomCommand{ argument } => {
+          println!("arg {}", argument);
+          let world = "world";
+          json!({
+            "hello": world
+          })
         }
-        Ok(command) => {
-          match command {
-            // definitions for your custom commands from Cmd here
-            MyCustomCommand { argument } => {
-              //  your command code
-              println!("{}", argument);
-            }
-          }
-          Ok(())
-        }
-      }
+      })
     })
     .build()
     .run();
