@@ -3,11 +3,10 @@
   windows_subsystem = "windows"
 )]
 
-mod async_handler;
 mod cmd;
 
 use serde_json::json;
-use async_handler::AppBuilderExt;
+use tauri_async_handler::*;
 
 fn main() {
   tauri::AppBuilder::new()
