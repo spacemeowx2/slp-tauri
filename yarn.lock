@@ -982,22 +982,12 @@
     nullthrows "^1.1.1"
 
 "@parcel/cache@2.0.0-nightly.279+149c00b7":
-  version "2.0.0-nightly.278"
-  resolved "https://registry.npm.taobao.org/@parcel/cache/download/@parcel/cache-2.0.0-nightly.278.tgz#23e253199dcdecf308fe177238691401858c8ca2"
-  integrity sha1-I+JTGZ3N7PMI/hdyOGkUAYWMjKI=
+  version "2.0.0-nightly.279"
+  resolved "https://registry.npm.taobao.org/@parcel/cache/download/@parcel/cache-2.0.0-nightly.279.tgz#5d677ed456d402ecea986f286aab16a679533ce3"
+  integrity sha1-XWd+1FbUAuzqmG8oaqsWpnlTPOM=
   dependencies:
-    "@parcel/logger" "2.0.0-nightly.278+417a8c6c"
-    "@parcel/utils" "2.0.0-nightly.278+417a8c6c"
-
-"@parcel/codeframe@2.0.0-nightly.278+417a8c6c":
-  version "2.0.0-nightly.278"
-  resolved "https://registry.npm.taobao.org/@parcel/codeframe/download/@parcel/codeframe-2.0.0-nightly.278.tgz#d47021a36d9d06743786f9f7fb6b95efa693a4c0"
-  integrity sha1-1HAho22dBnQ3hvn3+2uV76aTpMA=
-  dependencies:
-    chalk "^2.4.2"
-    emphasize "^2.1.0"
-    slice-ansi "^4.0.0"
-    string-width "^4.2.0"
+    "@parcel/logger" "2.0.0-nightly.279+149c00b7"
+    "@parcel/utils" "2.0.0-nightly.279+149c00b7"
 
 "@parcel/codeframe@2.0.0-nightly.279+149c00b7":
   version "2.0.0-nightly.279"
@@ -1084,14 +1074,6 @@
     nullthrows "^1.1.1"
     semver "^5.4.1"
 
-"@parcel/diagnostic@2.0.0-nightly.278+417a8c6c":
-  version "2.0.0-nightly.278"
-  resolved "https://registry.npm.taobao.org/@parcel/diagnostic/download/@parcel/diagnostic-2.0.0-nightly.278.tgz#a35695304655a5d82a72c6a6228e8c55e47c591e"
-  integrity sha1-o1aVMEZVpdgqcsamIo6MVeR8WR4=
-  dependencies:
-    json-source-map "^0.6.1"
-    nullthrows "^1.1.1"
-
 "@parcel/diagnostic@2.0.0-nightly.279+149c00b7":
   version "2.0.0-nightly.279"
   resolved "https://registry.npm.taobao.org/@parcel/diagnostic/download/@parcel/diagnostic-2.0.0-nightly.279.tgz#87512d64f7aa3c7c0bf0bbdf082bcdc2ba26e2f0"
@@ -1099,11 +1081,6 @@
   dependencies:
     json-source-map "^0.6.1"
     nullthrows "^1.1.1"
-
-"@parcel/events@2.0.0-nightly.278+417a8c6c":
-  version "2.0.0-nightly.278"
-  resolved "https://registry.npm.taobao.org/@parcel/events/download/@parcel/events-2.0.0-nightly.278.tgz#47b596ae91e37d689c119ccba27909f3c1322856"
-  integrity sha1-R7WWrpHjfWicEZzLonkJ88EyKFY=
 
 "@parcel/events@2.0.0-nightly.279+149c00b7":
   version "2.0.0-nightly.279"
@@ -1124,14 +1101,6 @@
     nullthrows "^1.1.1"
     rimraf "^2.6.2"
 
-"@parcel/logger@2.0.0-nightly.278+417a8c6c":
-  version "2.0.0-nightly.278"
-  resolved "https://registry.npm.taobao.org/@parcel/logger/download/@parcel/logger-2.0.0-nightly.278.tgz#f6ffb6d136573be0437c84489bfc7aed13f01579"
-  integrity sha1-9v+20TZXO+BDfIRIm/x67RPwFXk=
-  dependencies:
-    "@parcel/diagnostic" "2.0.0-nightly.278+417a8c6c"
-    "@parcel/events" "2.0.0-nightly.278+417a8c6c"
-
 "@parcel/logger@2.0.0-nightly.279+149c00b7":
   version "2.0.0-nightly.279"
   resolved "https://registry.npm.taobao.org/@parcel/logger/download/@parcel/logger-2.0.0-nightly.279.tgz#ee20fb321d1c7642e0040a6fad4c902fdf8de949"
@@ -1139,13 +1108,6 @@
   dependencies:
     "@parcel/diagnostic" "2.0.0-nightly.279+149c00b7"
     "@parcel/events" "2.0.0-nightly.279+149c00b7"
-
-"@parcel/markdown-ansi@2.0.0-nightly.278+417a8c6c":
-  version "2.0.0-nightly.278"
-  resolved "https://registry.npm.taobao.org/@parcel/markdown-ansi/download/@parcel/markdown-ansi-2.0.0-nightly.278.tgz#2c3221730c453a229d20612e83186877a577f6de"
-  integrity sha1-LDIhcwxFOiKdIGEugxhod6V39t4=
-  dependencies:
-    chalk "^2.4.2"
 
 "@parcel/markdown-ansi@2.0.0-nightly.279+149c00b7":
   version "2.0.0-nightly.279"
@@ -1419,14 +1381,6 @@
     node-addon-api "^2.0.0"
     node-gyp-build "^4.2.2"
 
-"@parcel/source-map@2.0.0-alpha.4.9":
-  version "2.0.0-alpha.4.9"
-  resolved "https://registry.npm.taobao.org/@parcel/source-map/download/@parcel/source-map-2.0.0-alpha.4.9.tgz#773567807eac8a16a3e1d06896ed2be7de7bcc2b"
-  integrity sha1-dzVngH6sihaj4dBolu0r5957zCs=
-  dependencies:
-    node-addon-api "^2.0.0"
-    node-gyp-build "^4.2.1"
-
 "@parcel/transformer-babel@2.0.0-nightly.279+149c00b7":
   version "2.0.0-nightly.279"
   resolved "https://registry.npm.taobao.org/@parcel/transformer-babel/download/@parcel/transformer-babel-2.0.0-nightly.279.tgz#4a9811bd3fdeea9adf0691c8180c1aee148211da"
@@ -1677,33 +1631,6 @@
   resolved "https://registry.npm.taobao.org/@parcel/types/download/@parcel/types-2.0.0-nightly.279.tgz#9a8f15cb8d14af95986472b9138c83c38e00b052"
   integrity sha1-mo8Vy40Ur5WYZHK5E4yDw44AsFI=
 
-"@parcel/utils@2.0.0-nightly.278+417a8c6c":
-  version "2.0.0-nightly.278"
-  resolved "https://registry.npm.taobao.org/@parcel/utils/download/@parcel/utils-2.0.0-nightly.278.tgz?cache=0&sync_timestamp=1591083025689&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40parcel%2Futils%2Fdownload%2F%40parcel%2Futils-2.0.0-nightly.278.tgz#eee594424dfe05c2182e13ffb404da86877dcb8a"
-  integrity sha1-7uWUQk3+BcIYLhP/tATahod9y4o=
-  dependencies:
-    "@iarna/toml" "^2.2.0"
-    "@parcel/codeframe" "2.0.0-nightly.278+417a8c6c"
-    "@parcel/diagnostic" "2.0.0-nightly.278+417a8c6c"
-    "@parcel/logger" "2.0.0-nightly.278+417a8c6c"
-    "@parcel/markdown-ansi" "2.0.0-nightly.278+417a8c6c"
-    "@parcel/source-map" "2.0.0-alpha.4.9"
-    ansi-html "^0.0.7"
-    chalk "^2.4.2"
-    clone "^2.1.1"
-    fast-glob "3.1.1"
-    is-glob "^4.0.0"
-    is-url "^1.2.2"
-    js-levenshtein "^1.1.6"
-    json5 "^1.0.1"
-    micromatch "^4.0.2"
-    node-forge "^0.8.1"
-    nullthrows "^1.1.1"
-    open "^7.0.3"
-    resolve "^1.12.0"
-    serialize-to-js "^3.0.1"
-    terser "^3.7.3"
-
 "@parcel/utils@2.0.0-nightly.279+149c00b7":
   version "2.0.0-nightly.279"
   resolved "https://registry.npm.taobao.org/@parcel/utils/download/@parcel/utils-2.0.0-nightly.279.tgz?cache=0&sync_timestamp=1591083025689&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40parcel%2Futils%2Fdownload%2F%40parcel%2Futils-2.0.0-nightly.279.tgz#a87e3b6da198205d5fbe22037b7cca1b1ee9f333"
@@ -1741,13 +1668,13 @@
     prebuild-install "^5.2.5"
 
 "@parcel/workers@2.0.0-nightly.279+149c00b7":
-  version "2.0.0-nightly.278"
-  resolved "https://registry.npm.taobao.org/@parcel/workers/download/@parcel/workers-2.0.0-nightly.278.tgz#4832f8a8483468852987aadc604b9185dba98e9a"
-  integrity sha1-SDL4qEg0aIUph6rcYEuRhdupjpo=
+  version "2.0.0-nightly.279"
+  resolved "https://registry.npm.taobao.org/@parcel/workers/download/@parcel/workers-2.0.0-nightly.279.tgz#c8d74825680b7e4238673dd6303b3f6885d44362"
+  integrity sha1-yNdIJWgLfkI4Zz3WMDs/aIXUQ2I=
   dependencies:
-    "@parcel/diagnostic" "2.0.0-nightly.278+417a8c6c"
-    "@parcel/logger" "2.0.0-nightly.278+417a8c6c"
-    "@parcel/utils" "2.0.0-nightly.278+417a8c6c"
+    "@parcel/diagnostic" "2.0.0-nightly.279+149c00b7"
+    "@parcel/logger" "2.0.0-nightly.279+149c00b7"
+    "@parcel/utils" "2.0.0-nightly.279+149c00b7"
     chrome-trace-event "^1.0.2"
     nullthrows "^1.1.1"
 
@@ -6540,7 +6467,7 @@ node-forge@^0.8.1:
   resolved "https://registry.npm.taobao.org/node-forge/download/node-forge-0.8.5.tgz#57906f07614dc72762c84cef442f427c0e1b86ee"
   integrity sha1-V5BvB2FNxydiyEzvRC9CfA4bhu4=
 
-node-gyp-build@^4.2.1, node-gyp-build@^4.2.2:
+node-gyp-build@^4.2.2:
   version "4.2.2"
   resolved "https://registry.npm.taobao.org/node-gyp-build/download/node-gyp-build-4.2.2.tgz#3f44b65adaafd42fb6c3d81afd630e45c847eb66"
   integrity sha1-P0S2Wtqv1C+2w9ga/WMORchH62Y=

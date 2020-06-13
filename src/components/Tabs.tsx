@@ -27,7 +27,7 @@ export const Tabs = withStatic((({ children }) => {
         key={props.id}
         aria-selected={props.id === id}
         onClick={() => setId(props.id)}
-      >{props.title ?? props.id}</button>)}
+      >{props.title || props.id}</button>)}
     </menu>
     { c.filter(i => i.props.id === id) }
   </>
