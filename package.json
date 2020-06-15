@@ -4,7 +4,7 @@
   "main": "dist/index.html",
   "license": "MIT",
   "scripts": {
-    "watch": "parcel -p 4000 src/index.html",
+    "dev": "parcel -p 4000 src/index.html",
     "build": "parcel build src/index.html --public-url ./"
   },
   "dependencies": {
