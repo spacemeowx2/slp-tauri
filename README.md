@@ -6,6 +6,7 @@ Install `tauri-bundler`
 
 ```shell
 cargo install tauri-bundler --force
+
 yarn tauri build
 ```
 
