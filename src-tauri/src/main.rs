@@ -12,6 +12,9 @@ use tokio::{process::{Command, Child}, sync::Mutex, io::{BufReader, AsyncBufRead
 use tauri::api::command::{command_path, binary_command};
 use std::process::Stdio;
 use tokio::{net::UdpSocket, time::{Instant, Duration, timeout}};
+#[cfg(target_os = "windows")]
+use std::os::windows::process::CommandExt;
+
 
 enum Status {
   Ready,
@@ -54,7 +57,16 @@ fn main() {
           Run { arguments } => {
             let path = command_path(binary_command("lan-play".to_string())?)?;
             println!("path {:?}", path);
-            let mut child = Command::new(path)
+
+            #[cfg(not(target_os = "windows"))]
+            let mut command = Command::new(path);
+            #[cfg(target_os = "windows")]
+            let mut command = {
+              let mut std_cmd = std::process::Command::new(path);
+              std_cmd.creation_flags(0x08000000);
+              Command::from(std_cmd)
+            };
+            let mut child = command
               .args(arguments)
               .stdout(Stdio::piped())
               .stderr(Stdio::piped())
