@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.html",
   "license": "MIT",
   "scripts": {
     "watch": "parcel -p 4000 src/index.html",
