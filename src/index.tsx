@@ -4,7 +4,7 @@ import { ThemeProvider, Theme } from './css'
 import { Tabs } from './components/Tabs'
 import { useInput } from './hooks'
 import { Select } from './components/Select'
-import { run, kill, Status, getStatus, pollOutput, get } from './tauri'
+import { run, kill, Status, getStatus, pollOutput, getServerList } from './tauri'
 import { Input } from './components/Input'
 
 const ServerListSource = [
@@ -40,9 +40,7 @@ const useFetch = (url: string) => {
   const fetch = useCallback(() => {
     setError(undefined)
     setLoading(true)
-    get(url, {
-      timeout: 1000
-    })
+    getServerList(url)
       .then(setData, setError)
       .then(() => setLoading(false))
   }, [ url ])
@@ -95,10 +93,6 @@ const Index: React.FC = () => {
     <div style={{ height: '100%', margin: '0'}} className='window'>
       <div className='title-bar'>
         <div className='title-bar-text'>Switch Lan Play</div>
-        <div className='title-bar-controls'>
-          <button aria-label='Minimize'></button>
-          <button aria-label='Close'></button>
-        </div>
       </div>
 
       <div className='window-body'>

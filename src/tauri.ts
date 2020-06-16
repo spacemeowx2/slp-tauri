@@ -38,6 +38,13 @@ export const pollOutput = (): Promise<string> => {
   })
 }
 
+export const getServerList = (url: string): Promise<string> => {
+  return window.tauri.promisified({
+    cmd: 'getServerList',
+    url,
+  })
+}
+
 export interface Config {
   server: string
   proxy: string

@@ -15,4 +15,5 @@ pub enum Cmd {
   Kill,
   GetStatus,
   PollOutput,
+  GetServerList { url: String },
 }

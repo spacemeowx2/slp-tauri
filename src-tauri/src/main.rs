@@ -100,6 +100,12 @@ fn main() {
           },
           PollOutput => {
             json!(status.take_output())
+          },
+          GetServerList { url }=> {
+            json!(reqwest::get(&url)
+              .await?
+              .text()
+              .await?)
           }
         })
       }
