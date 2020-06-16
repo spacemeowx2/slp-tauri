@@ -5,3 +5,4 @@ node_modules
 /.parcel-cache
 *.log
 /bin
+.DS_Store
