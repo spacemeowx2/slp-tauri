@@ -9,4 +9,10 @@ pub enum Cmd {
   MyCustomCommand {
     argument: String,
   },
+  Run {
+    arguments: Vec<String>,
+  },
+  Kill,
+  GetStatus,
+  PollOutput,
 }

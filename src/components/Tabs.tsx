@@ -13,7 +13,7 @@ export const TabsItem: React.FC<TabsItemProps> = ({ children }) => <>
 </>
 
 type TabsProps = {
-  children?: React.ReactElement<TabsItemProps>[] | React.ReactElement<TabsItemProps>
+  children?: React.ReactElement<TabsItemProps>[] | React.ReactElement<TabsItemProps> | false
 }
 
 export const Tabs = withStatic((({ children }) => {

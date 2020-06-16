@@ -1,10 +1,10 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { render } from 'react-dom'
 import { ThemeProvider, Theme } from './css'
 import { Tabs } from './components/Tabs'
 import { useInput } from './hooks'
 import { Select } from './components/Select'
-import { myCustomCommand } from './tauri'
+import { myCustomCommand, run, kill, Status, getStatus, pollOutput } from './tauri'
 import { Input } from './components/Input'
 
 interface Options {
@@ -19,6 +19,21 @@ const Index: React.FC = () => {
   const [ theme, themeProps ] = useInput('xp')
   const [ proxy, proxyProps ] = useInput('')
   const [ server, serverProps ] = useInput('')
+  const [ status, setStatus ] = useState<Status>({ status: 'ready' })
+  const [ output, setOutput ] = useState('')
+  const appendOutput = (v: string) => {
+    setOutput(p => p + v)
+  }
+  useEffect(() => {
+    const id = setInterval(() => getStatus().then(s => setStatus(s)), 500)
+    return () => clearInterval(id)
+  }, [])
+  useEffect(() => {
+    if (status.status === 'running') {
+      const id = setInterval(() => pollOutput().then(appendOutput), 10)
+      return () => clearInterval(id)
+    }
+  }, [ status.status ])
 
   const commandLine = useMemo(() => {
     let argv = []
@@ -85,9 +100,19 @@ const Index: React.FC = () => {
               <p>lan-play {commandLine.join(' ')}</p>
             </fieldset>
           </Tabs.Item>
+          { status.status === 'running' && <Tabs.Item id='Output'>
+            <pre>{ output }</pre>
+          </Tabs.Item>}
         </Tabs>
         <section className='field-row' style={{ justifyContent: 'flex-end' }}>
-          <button>Run</button>
+          <p>{status}</p>
+          <button onClick={() => {
+            if (status.status === 'ready') {
+              run(commandLine).then(setStatus).then(() => setOutput(''))
+            } else {
+              kill().then(setStatus)
+            }
+          }}>{status.status === 'ready' ? 'Run' : 'Stop'}</button>
         </section>
       </div>
     </div>

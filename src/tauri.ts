@@ -37,3 +37,32 @@ export const myCustomCommand = (argument: string): Promise<void> => {
     argument,
   })
 }
+
+export interface Status {
+  status: 'running' | 'ready'
+}
+
+export const run = (args: string[]): Promise<Status> => {
+  return window.tauri.promisified({
+    cmd: 'run',
+    arguments: args,
+  })
+}
+
+export const kill = (): Promise<Status> => {
+  return window.tauri.promisified({
+    cmd: 'kill',
+  })
+}
+
+export const getStatus = (): Promise<Status> => {
+  return window.tauri.promisified({
+    cmd: 'getStatus',
+  })
+}
+
+export const pollOutput = (): Promise<string> => {
+  return window.tauri.promisified({
+    cmd: 'pollOutput',
+  })
+}
