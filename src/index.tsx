@@ -4,7 +4,7 @@ import { ThemeProvider, Theme } from './css'
 import { Tabs } from './components/Tabs'
 import { useInput } from './hooks'
 import { Select } from './components/Select'
-import { myCustomCommand, run, kill, Status, getStatus, pollOutput } from './tauri'
+import { run, kill, Status, getStatus, pollOutput } from './tauri'
 import { Input } from './components/Input'
 
 interface Options {
@@ -30,8 +30,7 @@ const Log: React.FC<{ log: string[] }> = ({ log }) => {
 }
 
 const Index: React.FC = () => {
-  const [ count, setCount ] = useState(0)
-  const [ msg, setMsg ] = useState('msg')
+  const [ err, setErr ] = useState('')
   const [ theme, themeProps ] = useInput('xp')
   const [ proxy, proxyProps ] = useInput('')
   const [ server, serverProps ] = useInput('')
@@ -80,22 +79,6 @@ const Index: React.FC = () => {
         <Tabs>
           <Tabs.Item id='Server'>
             <Select options={['127.0.0.1:11451', 'home.imspace.cn:11451']} {...serverProps}/>
-            <p style={{ textAlign: 'center' }}>Current count: {count}</p>
-            <p style={{ textAlign: 'center' }}>{msg}</p>
-            <div className='field-row' style={{ justifyContent: 'center' }}>
-              <button onClick={() => setCount(count + 1)}>+</button>
-              <button onClick={() => setCount(count - 1)}>-</button>
-              <button onClick={() => setCount(0)}>0</button>
-              <button onClick={async () => {
-                try {
-                  setMsg('myCustomCommand')
-                  let result = await myCustomCommand(count.toString())
-                  setMsg('result ' + JSON.stringify(result))
-                } catch (e) {
-                  setMsg('error ' + e.toString())
-                }
-              }}>myCustomCommand</button>
-            </div>
           </Tabs.Item>
           <Tabs.Item id='Settings'>
             <fieldset>
@@ -123,12 +106,12 @@ const Index: React.FC = () => {
           </Tabs.Item>
         </Tabs>
         <section className='field-row' style={{ justifyContent: 'flex-end' }}>
-          <p>{status}</p>
+          <p>{err}</p>
           <button onClick={() => {
             if (status.status === 'ready') {
-              run(commandLine).then(setStatus).then(() => setOutput([]))
+              run(commandLine).then(setStatus).then(() => setOutput([]), setErr)
             } else {
-              kill().then(setStatus)
+              kill().then(setStatus, setErr)
             }
           }}>{status.status === 'ready' ? 'Run' : 'Stop'}</button>
         </section>
