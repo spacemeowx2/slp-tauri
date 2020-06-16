@@ -4,6 +4,7 @@ import { withStatic } from '../utils/withStatic'
 type TabsItemProps = {
   id: string
   title?: React.ReactNode
+  hidden?: boolean
 }
 
 export const TabsItem: React.FC<TabsItemProps> = ({ children }) => <>
@@ -17,7 +18,7 @@ type TabsProps = {
 }
 
 export const Tabs = withStatic((({ children }) => {
-  const c = React.Children.toArray(children) as React.ReactElement<TabsItemProps>[]
+  const c = (React.Children.toArray(children) as React.ReactElement<TabsItemProps>[]).filter(i => !i.props.hidden)
   const [ id, setId ] = useState(c[0].props.id)
   useEffect(() => {
     const ids = c.map(i => i.props.id)

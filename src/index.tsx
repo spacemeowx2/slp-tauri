@@ -21,7 +21,7 @@ const Log: React.FC<{ log: string[] }> = ({ log }) => {
     }
   }, [ log, log.length ])
   return <>
-    <div ref={r => box.current = r} style={{maxHeight: 200, overflowY: 'auto', overflowX: 'hidden'}}>
+    <div ref={r => box.current = r} style={{maxHeight: 500, overflowY: 'auto', overflowX: 'hidden'}}>
       <pre>
         {log.map((p, i) => <Fragment key={i}>{p}</Fragment>)}
       </pre>
@@ -118,9 +118,9 @@ const Index: React.FC = () => {
               <p>lan-play {commandLine.join(' ')}</p>
             </fieldset>
           </Tabs.Item>
-          { status.status === 'running' && <Tabs.Item id='Output'>
+          <Tabs.Item id='Output' hidden={status.status !== 'running'}>
             <Log log={output}/>
-          </Tabs.Item>}
+          </Tabs.Item>
         </Tabs>
         <section className='field-row' style={{ justifyContent: 'flex-end' }}>
           <p>{status}</p>
