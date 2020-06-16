@@ -22,7 +22,7 @@ const Log: React.FC<{ log: string[] }> = ({ log }) => {
   const box = useRef<HTMLDivElement | null>()
   useEffect(() => {
     if (box.current) {
-      box.current.scrollTo(0, box.current.scrollHeight)
+      box.current.scrollTop = box.current.scrollHeight
     }
   }, [ log, log.length ])
   return <>
