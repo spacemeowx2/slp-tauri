@@ -4,8 +4,9 @@ import { ThemeProvider, Theme } from './css'
 import { Tabs } from './components/Tabs'
 import { useInput } from './hooks'
 import { Select } from './components/Select'
-import { run, kill, Status, getStatus, pollOutput, getServerList } from './tauri'
+import { run, kill, Status, getStatus, pollOutput, getServerList, ServerListResponse, ServerItem } from './tauri'
 import { Input } from './components/Input'
+import { ServerList } from './components/ServerList'
 
 const ServerListSource = [
   'https://switch-lan-play.github.io/server-list/server-list.json',
@@ -33,9 +34,9 @@ const Log: React.FC<{ log: string[] }> = ({ log }) => {
   </>
 }
 
-const useFetch = (url: string) => {
+const useGetServerList = (url: string) => {
   const [ loading, setLoading ] = useState(false)
-  const [ data, setData ] = useState('')
+  const [ data, setData ] = useState<ServerListResponse>(undefined)
   const [ error, setError ] = useState(undefined)
   const fetch = useCallback(() => {
     setError(undefined)
@@ -51,6 +52,12 @@ const useFetch = (url: string) => {
   }] as const
 }
 
+const TestData: ServerItem[] = [{
+  name: 'Test',
+  ip: 'switch.lan-play.com',
+  port: 11451
+}]
+
 const Index: React.FC = () => {
   const [ err, setErr ] = useState('')
   const [ theme, themeProps ] = useInput('xp')
@@ -59,7 +66,7 @@ const Index: React.FC = () => {
   const [ server, serverProps ] = useInput('')
   const [ status, setStatus ] = useState<Status>({ status: 'ready' })
   const [ output, setOutput ] = useState<string[]>([])
-  const [ fetch, { loading, data, error } ] = useFetch(serverSource)
+  const [ fetch, { loading, data, error } ] = useGetServerList(serverSource)
   const appendOutput = (v: string) => {
     if (v) {
       setOutput(p => [...p, v])
@@ -100,8 +107,7 @@ const Index: React.FC = () => {
           <Tabs.Item id='Server'>
             { error && <p>Error: {error}</p>}
             <p>{serverSource} <button onClick={fetch} disabled={loading}>{ loading ? 'Loading' : 'Fetch' }</button></p>
-            { JSON.stringify(data) }
-            <Select options={['127.0.0.1:11451', 'home.imspace.cn:11451']} {...serverProps}/>
+            <ServerList serverList={data ? data.serverList : TestData} {...serverProps} />
           </Tabs.Item>
           <Tabs.Item id='Settings'>
             <fieldset>
@@ -120,7 +126,7 @@ const Index: React.FC = () => {
               <p>Example: 127.0.0.1:1080</p>
               <div className='field-row'>
                 <label>Proxy: </label>
-                <Input {...proxyProps} />
+                <Input {...proxyProps} placeholder='Write proxy here' />
               </div>
             </fieldset>
             <fieldset>

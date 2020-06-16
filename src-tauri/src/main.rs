@@ -11,6 +11,7 @@ use std::sync::Arc;
 use tokio::{process::{Command, Child}, sync::Mutex, io::{BufReader, AsyncBufReadExt}};
 use tauri::api::command::{command_path, binary_command};
 use std::process::Stdio;
+use tokio::{net::UdpSocket, time::{Instant, Duration, timeout}};
 
 enum Status {
   Ready,
@@ -101,11 +102,20 @@ fn main() {
           PollOutput => {
             json!(status.take_output())
           },
-          GetServerList { url }=> {
+          GetServerList { url } => {
             json!(reqwest::get(&url)
               .await?
               .text()
               .await?)
+          },
+          Ping { server } => {
+            let mut buf = [0u8; 5];
+            let mut socket = UdpSocket::bind("0.0.0.0:0").await?;
+            socket.connect(server).await?;
+            socket.send(b"\x02\x01\x02\x03\x04").await?;
+            let start = Instant::now();
+            timeout(Duration::from_millis(500), socket.recv(&mut buf)).await??;
+            json!(start.elapsed().as_millis() as i32)
           }
         })
       }

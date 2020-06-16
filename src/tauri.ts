@@ -1,7 +1,5 @@
 /// <reference path='./tauri.d.ts'/>
 
-export * from 'tauri/api/http'
-
 export const myCustomCommand = (argument: string): Promise<void> => {
   return window.tauri.promisified({
     cmd: 'myCustomCommand',
@@ -38,11 +36,26 @@ export const pollOutput = (): Promise<string> => {
   })
 }
 
-export const getServerList = (url: string): Promise<string> => {
-  return window.tauri.promisified({
+export interface ServerItem {
+  name: string
+  ip: string
+  port: number
+}
+export interface ServerListResponse {
+  version: string
+  serverList: ServerItem[]
+}
+export const getServerList = async (url: string): Promise<ServerListResponse> => {
+  return JSON.parse(await window.tauri.promisified({
     cmd: 'getServerList',
     url,
-  })
+  }))
+}
+export const ping = async (server: string): Promise<number> => {
+  return JSON.parse(await window.tauri.promisified({
+    cmd: 'ping',
+    server,
+  }))
 }
 
 export interface Config {

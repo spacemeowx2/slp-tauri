@@ -6,3 +6,6 @@ body {
 .window {
   box-sizing: border-box;
 }
+summary::-webkit-details-marker {
+  display: none;
+}
