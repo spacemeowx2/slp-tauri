@@ -1,11 +1,15 @@
-import React, { useState, useMemo, useEffect, useRef, Fragment } from 'react'
+import React, { useState, useMemo, useEffect, useRef, Fragment, useCallback } from 'react'
 import { render } from 'react-dom'
 import { ThemeProvider, Theme } from './css'
 import { Tabs } from './components/Tabs'
 import { useInput } from './hooks'
 import { Select } from './components/Select'
-import { run, kill, Status, getStatus, pollOutput } from './tauri'
+import { run, kill, Status, getStatus, pollOutput, get } from './tauri'
 import { Input } from './components/Input'
+
+const ServerListSource = [
+  'https://switch-lan-play.github.io/server-list/server-list.json',
+]
 
 interface Options {
   enableProxy: boolean
@@ -29,13 +33,35 @@ const Log: React.FC<{ log: string[] }> = ({ log }) => {
   </>
 }
 
+const useFetch = (url: string) => {
+  const [ loading, setLoading ] = useState(false)
+  const [ data, setData ] = useState('')
+  const [ error, setError ] = useState(undefined)
+  const fetch = useCallback(() => {
+    setError(undefined)
+    setLoading(true)
+    get(url, {
+      timeout: 1000
+    })
+      .then(setData, setError)
+      .then(() => setLoading(false))
+  }, [ url ])
+  return [fetch, {
+    data,
+    loading,
+    error,
+  }] as const
+}
+
 const Index: React.FC = () => {
   const [ err, setErr ] = useState('')
   const [ theme, themeProps ] = useInput('xp')
+  const [ serverSource, serverSourceProps ] = useInput(ServerListSource[0])
   const [ proxy, proxyProps ] = useInput('')
   const [ server, serverProps ] = useInput('')
   const [ status, setStatus ] = useState<Status>({ status: 'ready' })
   const [ output, setOutput ] = useState<string[]>([])
+  const [ fetch, { loading, data, error } ] = useFetch(serverSource)
   const appendOutput = (v: string) => {
     if (v) {
       setOutput(p => [...p, v])
@@ -78,6 +104,9 @@ const Index: React.FC = () => {
       <div className='window-body'>
         <Tabs>
           <Tabs.Item id='Server'>
+            { error && <p>Error: {error}</p>}
+            <p>{serverSource} <button onClick={fetch} disabled={loading}>{ loading ? 'Loading' : 'Fetch' }</button></p>
+            { JSON.stringify(data) }
             <Select options={['127.0.0.1:11451', 'home.imspace.cn:11451']} {...serverProps}/>
           </Tabs.Item>
           <Tabs.Item id='Settings'>
@@ -85,6 +114,11 @@ const Index: React.FC = () => {
               <legend>Theme</legend>
               <label>Select a theme</label>
               <Select options={['98', 'xp']} {...themeProps}/>
+            </fieldset>
+            <fieldset>
+              <legend>Server list</legend>
+              <label>Load server list from</label>
+              <Select options={ServerListSource} {...serverSourceProps}/>
             </fieldset>
             <fieldset>
               <legend>Proxy</legend>
