@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect, useRef, Fragment } from 'react'
 import { render } from 'react-dom'
 import { ThemeProvider, Theme } from './css'
 import { Tabs } from './components/Tabs'
@@ -13,6 +13,22 @@ interface Options {
   proxy?: string
 }
 
+const Log: React.FC<{ log: string[] }> = ({ log }) => {
+  const box = useRef<HTMLDivElement | null>()
+  useEffect(() => {
+    if (box.current) {
+      box.current.scrollTo(0, box.current.scrollHeight)
+    }
+  }, [ log, log.length ])
+  return <>
+    <div ref={r => box.current = r} style={{maxHeight: 200, overflowY: 'auto', overflowX: 'hidden'}}>
+      <pre>
+        {log.map((p, i) => <Fragment key={i}>{p}</Fragment>)}
+      </pre>
+    </div>
+  </>
+}
+
 const Index: React.FC = () => {
   const [ count, setCount ] = useState(0)
   const [ msg, setMsg ] = useState('msg')
@@ -20,9 +36,11 @@ const Index: React.FC = () => {
   const [ proxy, proxyProps ] = useInput('')
   const [ server, serverProps ] = useInput('')
   const [ status, setStatus ] = useState<Status>({ status: 'ready' })
-  const [ output, setOutput ] = useState('')
+  const [ output, setOutput ] = useState<string[]>([])
   const appendOutput = (v: string) => {
-    setOutput(p => p + v)
+    if (v) {
+      setOutput(p => [...p, v])
+    }
   }
   useEffect(() => {
     const id = setInterval(() => getStatus().then(s => setStatus(s)), 500)
@@ -30,13 +48,13 @@ const Index: React.FC = () => {
   }, [])
   useEffect(() => {
     if (status.status === 'running') {
-      const id = setInterval(() => pollOutput().then(appendOutput), 10)
+      const id = setInterval(() => pollOutput().then(appendOutput), 500)
       return () => clearInterval(id)
     }
   }, [ status.status ])
 
   const commandLine = useMemo(() => {
-    let argv = []
+    let argv = ['--set-ionbf']
     if (proxy) {
       argv.push('--socks5-server-addr', proxy)
     }
@@ -101,14 +119,14 @@ const Index: React.FC = () => {
             </fieldset>
           </Tabs.Item>
           { status.status === 'running' && <Tabs.Item id='Output'>
-            <pre>{ output }</pre>
+            <Log log={output}/>
           </Tabs.Item>}
         </Tabs>
         <section className='field-row' style={{ justifyContent: 'flex-end' }}>
           <p>{status}</p>
           <button onClick={() => {
             if (status.status === 'ready') {
-              run(commandLine).then(setStatus).then(() => setOutput(''))
+              run(commandLine).then(setStatus).then(() => setOutput([]))
             } else {
               kill().then(setStatus)
             }

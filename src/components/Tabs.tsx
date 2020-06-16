@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { withStatic } from '../utils/withStatic'
 
 type TabsItemProps = {
@@ -19,6 +19,12 @@ type TabsProps = {
 export const Tabs = withStatic((({ children }) => {
   const c = React.Children.toArray(children) as React.ReactElement<TabsItemProps>[]
   const [ id, setId ] = useState(c[0].props.id)
+  useEffect(() => {
+    const ids = c.map(i => i.props.id)
+    if (!ids.includes(id)) {
+      setId(ids[0])
+    }
+  }, [ id, c ])
 
   return <>
     <menu role='tablist'>
