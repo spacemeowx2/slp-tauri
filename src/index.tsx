@@ -45,7 +45,7 @@ const useGetServerList = (url: string) => {
     getServerList(url)
       .then(setData, (e) => {
         console.error(e)
-        setError(e)
+        setError(e.toString())
       })
       .then(() => setLoading(false))
   }, [ url ])
