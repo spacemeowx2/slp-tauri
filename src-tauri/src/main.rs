@@ -40,7 +40,7 @@ fn main() {
   let status = Arc::new(Mutex::new(Status::Ready));
 
   tauri::AppBuilder::new()
-    .async_handler(move |cmd: cmd::Cmd| {
+    .async_handler_concurrent(None, move |cmd: cmd::Cmd| {
       let status_ref = status.clone();
       async move {
         use cmd::Cmd::*;

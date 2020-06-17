@@ -10,6 +10,7 @@ import { ServerList } from './components/ServerList'
 
 const ServerListSource = [
   'https://switch-lan-play.github.io/server-list/server-list.json',
+  'http://lan-play.com/data/servers.json'
 ]
 
 interface Options {
@@ -42,7 +43,10 @@ const useGetServerList = (url: string) => {
     setError(undefined)
     setLoading(true)
     getServerList(url)
-      .then(setData, setError)
+      .then(setData, (e) => {
+        console.error(e)
+        setError(e)
+      })
       .then(() => setLoading(false))
   }, [ url ])
   return [fetch, {

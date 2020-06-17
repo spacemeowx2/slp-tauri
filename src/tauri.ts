@@ -37,7 +37,7 @@ export const pollOutput = (): Promise<string> => {
 }
 
 export interface ServerItem {
-  name: string
+  name?: string
   ip: string
   port: number
 }
@@ -46,10 +46,18 @@ export interface ServerListResponse {
   serverList: ServerItem[]
 }
 export const getServerList = async (url: string): Promise<ServerListResponse> => {
-  return JSON.parse(await window.tauri.promisified({
+  const data = JSON.parse(await window.tauri.promisified({
     cmd: 'getServerList',
     url,
   }))
+  // compatibility with lan-play.com
+  if (Array.isArray(data)) {
+    return {
+      version: '1',
+      serverList: data,
+    }
+  }
+  return data
 }
 export const ping = async (server: string): Promise<number> => {
   return JSON.parse(await window.tauri.promisified({

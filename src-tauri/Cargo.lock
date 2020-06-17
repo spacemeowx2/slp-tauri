@@ -1680,10 +1680,11 @@ dependencies = [
 
 [[package]]
 name = "tauri-async-handler"
-version = "0.1.0"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1dd89652bd9665c3882fe6ad883cfe038d4297068084649bee5ea94d3bcc728f"
+checksum = "c46ebbe177839ed601aadb794f047395ef1d001f23cc99066ce38f3cc6dbf169"
 dependencies = [
+ "anyhow",
  "async-std",
  "futures-channel",
  "futures-util",
