@@ -15,6 +15,6 @@ pub enum Cmd {
   Kill,
   GetStatus,
   PollOutput,
-  GetServerList { url: String },
+  Get { url: String },
   Ping { server: String }
 }

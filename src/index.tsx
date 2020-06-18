@@ -57,9 +57,13 @@ const useGetServerList = (url: string) => {
 }
 
 const TestData: ServerItem[] = [{
+  name: 'localhost',
+  ip: 'localhost',
+  port: 11451,
+}, {
   name: 'Test',
   ip: 'switch.lan-play.com',
-  port: 11451
+  port: 11451,
 }]
 
 const Index: React.FC = () => {

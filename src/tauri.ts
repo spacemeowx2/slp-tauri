@@ -45,11 +45,16 @@ export interface ServerListResponse {
   version: string
   serverList: ServerItem[]
 }
-export const getServerList = async (url: string): Promise<ServerListResponse> => {
-  const data = JSON.parse(await window.tauri.promisified({
-    cmd: 'getServerList',
+export const get = async (url: string): Promise<string> => {
+  return await window.tauri.promisified({
+    cmd: 'get',
     url,
-  }))
+  })
+}
+export const getServerList = async (url: string): Promise<ServerListResponse> => {
+  const s: string = await get(url)
+  myCustomCommand(s)
+  const data = JSON.parse(s)
   // compatibility with lan-play.com
   if (Array.isArray(data)) {
     return {
