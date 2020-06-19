@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel -p 4000 src/index.html",
-    "build": "parcel build src/index.html --public-url ./"
+    "build": "parcel build src/index.html --public-url ./",
+    "icon": "tauri icon -l -i ./icon.png"
   },
   "dependencies": {
     "98.css": "^0.1.16",
