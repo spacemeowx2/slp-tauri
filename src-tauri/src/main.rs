@@ -63,6 +63,7 @@ fn main() {
             #[cfg(target_os = "windows")]
             let mut command = {
               let mut std_cmd = std::process::Command::new(path);
+              // hide black window
               std_cmd.creation_flags(0x08000000);
               Command::from(std_cmd)
             };

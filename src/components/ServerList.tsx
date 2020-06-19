@@ -1,22 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { ServerItem, ping as pingServer } from '../tauri'
 
 type ServerProps = {
   server: ServerItem
 }
 
-export const Server: React.FC<ServerProps> = ({ server }) => {
-  const [ open, setOpen ] = useState(false)
-  const [ ping, setPing ] = useState(-1)
+const useInterval = (cb: () => Promise<void>, interval: number, start: boolean) => {
   useEffect(() => {
-    if (open) {
+    if (start) {
       let stop = false
       let id: ReturnType<typeof setTimeout>
       const tick = async () => {
-        const addr = `${server.ip}:${server.port}`
-        setPing(await pingServer(addr))
+        await cb()
         if (!stop) {
-          id = setTimeout(tick, 5 * 1000)
+          id = setTimeout(tick, interval)
         }
       }
       tick()
@@ -25,7 +22,16 @@ export const Server: React.FC<ServerProps> = ({ server }) => {
         clearTimeout(id)
       }
     }
-  }, [ open, server.ip, server.port ])
+  }, [cb, interval, start])
+}
+
+export const Server: React.FC<ServerProps> = ({ server }) => {
+  const [ open, setOpen ] = useState(false)
+  const [ ping, setPing ] = useState(-1)
+  useInterval(useCallback(async () => {
+    const addr = `${server.ip}:${server.port}`
+    setPing(await pingServer(addr))
+  }, [server.ip, server.port]), 5 * 1000, open)
 
   return <>
     <li>

@@ -5,7 +5,23 @@ body {
 }
 .window {
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 summary::-webkit-details-marker {
   display: none;
+}
+.window-body {
+  height: 0;
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+}
+article[role=tabpanel] {
+  height: 0;
+  flex: auto;
+  position: relative;
+}
+pre {
+  box-sizing: border-box;
 }
