@@ -4,7 +4,7 @@ name: Build
 
 jobs:
   build:
-    name: Build
+    name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -50,7 +50,6 @@ jobs:
       - uses: actions-rs/install@v0.1
         with:
           crate: tauri-bundler
-          use-tool-cache: true
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '12'

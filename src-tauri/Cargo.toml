@@ -27,3 +27,6 @@ no-server = [ "tauri/no-server" ]
 [[bin]]
 name = "slp-tauri"
 path = "src/main.rs"
+
+[patch.crates-io]
+tauri = { git = "https://github.com/tauri-apps/tauri.git", rev = "tauri-core-v0.6.0" }
