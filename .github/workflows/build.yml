@@ -17,10 +17,10 @@ jobs:
             lp: lan-play-macos
             lpbin: lan-play-x86_64-apple-darwin
             release: bundle/dmg/slp-tauri.dmg
-          # - os: windows-latest
-          #   lp: lan-play-win64.exe
-          #   lpbin: lan-play-x86_64-pc-windows-msvc.exe
-          #   release: slp-tauri.x64.msi
+          - os: windows-latest
+            lp: lan-play-win64.exe
+            lpbin: lan-play-x86_64-pc-windows-msvc.exe
+            release: slp-tauri.x64.msi
 
     steps:
       # preparing cache
@@ -57,9 +57,9 @@ jobs:
       - run: yarn
       - uses: carlosperate/download-file-action@v1.0.3
         with:
-            file-url: https://github.com/spacemeowx2/switch-lan-play/releases/download/v0.2.2/${{ matrix.lp }}
-            file-name: ${{ matrix.lpbin }}
-            location: ./bin
+          file-url: https://github.com/spacemeowx2/switch-lan-play/releases/download/v0.2.2/${{ matrix.lp }}
+          file-name: ${{ matrix.lpbin }}
+          location: ./bin
       - run: yarn tauri build
       - uses: actions/upload-artifact@v1
         with:
