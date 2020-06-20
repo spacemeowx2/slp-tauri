@@ -1,0 +1,67 @@
+on: [push, pull_request]
+
+name: Build
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            lp: lan-play-linux
+            lpbin: lan-play-x86_64-unknown-linux-gnu
+            release: slp-tauri_0.1.0_amd64.deb
+          - os: macOS-latest
+            lp: lan-play-macos
+            lpbin: lan-play-x86_64-apple-darwin
+            release: slp-tauri.app
+          # - os: windows-latest
+          #   lp: lan-play-win64.exe
+          #   lpbin: lan-play-x86_64-pc-windows-msvc.exe
+          #   release: slp-tauri.x64.msi
+
+    steps:
+      # preparing cache
+      - name: Cache Cargo bin
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/
+          key: ${{ matrix.os }}-stable-cargo
+      - name: Cache Cargo build
+        uses: actions/cache@v1
+        with:
+          path: target/
+          key: ${{ matrix.os }}-stable-target-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ matrix.os }}-stable-target-
+      # setup tools
+      - uses: actions/checkout@v2
+      - name: install webkit2gtk (ubuntu only)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y webkit2gtk-4.0
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+      - uses: actions-rs/install@v0.1
+        with:
+          crate: tauri-bundler
+          use-tool-cache: true
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+      - run: yarn
+      - uses: carlosperate/download-file-action@v1.0.3
+        with:
+            file-url: https://github.com/spacemeowx2/switch-lan-play/releases/download/v0.2.2/${{ matrix.lp }}
+            file-name: ${{ matrix.lpbin }}
+            location: ./bin
+      - run: yarn tauri build
+      - uses: actions/upload-artifact@v1
+        with:
+          name: slp-tauri-(${{ matrix.os }})
+          path: ./src-tauri/target/release/${{ matrix.release }}
