@@ -16,5 +16,5 @@ pub enum Cmd {
   GetStatus,
   PollOutput,
   Get { url: String },
-  Ping { server: String }
+  Ping { server: String },
 }

@@ -4252,19 +4252,7 @@ fast-glob@3.1.1:
     merge2 "^1.3.0"
     micromatch "^4.0.2"
 
-fast-glob@3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.2.2.tgz#ade1a9d91148965d4bf7c51f72e1ca662d32e63d"
-  integrity sha512-UDV82o4uQyljznxwMxyVRJgZZt3O5wENYojjzbaGEGZgeOxkLFf+V4cnUD+krzb2F72E18RhamkMZ7AdeggF7A==
-  dependencies:
-    "@nodelib/fs.stat" "^2.0.2"
-    "@nodelib/fs.walk" "^1.2.3"
-    glob-parent "^5.1.0"
-    merge2 "^1.3.0"
-    micromatch "^4.0.2"
-    picomatch "^2.2.1"
-
-fast-glob@^3.0.3:
+fast-glob@3.2.4, fast-glob@^3.0.3:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.2.4.tgz#d20aefbf99579383e7f3cc66529158c9b98554d3"
   integrity sha512-kr/Oo6PX51265qeuCYsyGypiO5uJFgBS0jksyG7FUeCyQzNwYnzrNIMR1NXfkZXsMYXYLRAHgISHBz8gQcxKHQ==
@@ -7575,7 +7563,7 @@ preact@^10.0.5:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.4.4.tgz#0bd6d759ec2f8684aaf8c63c7f076191e46528cf"
   integrity sha512-EaTJrerceyAPatQ+vfnadoopsMBZAOY7ak9ogVdUi5xbpR8SoHgtLryXnW+4mQOwt21icqoVR1brkU2dq7pEBA==
 
-prebuild-install@^5.2.5, prebuild-install@^5.3.3:
+prebuild-install@^5.2.5, prebuild-install@^5.3.4:
   version "5.3.4"
   resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-5.3.4.tgz#6982d10084269d364c1856550b7d090ea31fa293"
   integrity sha512-AkKN+pf4fSEihjapLEEj8n85YIw/tN6BQqkhzbDc0RvEZGdkpJBGMUYx66AAMcPG2KzmPQS7Cm16an4HVBRRMA==
@@ -8285,16 +8273,16 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-sharp@0.25.3:
-  version "0.25.3"
-  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.25.3.tgz#fcb4f13fa9ce7d8a2d8273ebb40f375953cad937"
-  integrity sha512-qV3n30NaBEhAjBhFo+d8h5N4X3DHteFdwxXoWUiubk72G0VKT5fX50nlcawGYjPqfFV4Z2e/G9gDPeSGAdn/gg==
+sharp@0.25.4:
+  version "0.25.4"
+  resolved "https://registry.npm.taobao.org/sharp/download/sharp-0.25.4.tgz#1a8e542144a07ab7e9316ab89de80182b827c363"
+  integrity sha1-Go5UIUSgerfpMWq4negBgrgnw2M=
   dependencies:
     color "^3.1.2"
     detect-libc "^1.0.3"
     node-addon-api "^3.0.0"
     npmlog "^4.1.2"
-    prebuild-install "^5.3.3"
+    prebuild-install "^5.3.4"
     semver "^7.3.2"
     simple-get "^4.0.0"
     tar "^6.0.2"
@@ -8886,17 +8874,17 @@ tar@^6.0.2:
     mkdirp "^1.0.3"
     yallist "^4.0.0"
 
-tauri@^0.6.2:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/tauri/-/tauri-0.6.3.tgz#7d363180ff321e88e894900b693c5f8ce733fa95"
-  integrity sha512-3P72hwLQ69gWRUFZPsJwNZI8XHe6LwSF1sSnZiVxSwBMyJF6ivMJ7GG08KBHBY3ecrHfPTvj/bbSKzxVV1D7Lg==
+tauri@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.npm.taobao.org/tauri/download/tauri-0.7.0.tgz#fa806aa3b85d35154634c6ffc1b8d0dd63145240"
+  integrity sha1-+oBqo7hdNRVGNMb/wbjQ3WMUUkA=
   dependencies:
     "@tauri-apps/tauri-inliner" "1.14.1"
     "@tauri-apps/toml" "2.2.4"
     chalk "4.1.0"
     chokidar "3.4.0"
     cross-spawn "7.0.3"
-    fast-glob "3.2.2"
+    fast-glob "3.2.4"
     fs-extra "9.0.1"
     http-proxy "1.18.1"
     imagemin "7.0.1"
@@ -8911,7 +8899,7 @@ tauri@^0.6.2:
     ms "2.1.2"
     png2icons "2.0.1"
     read-chunk "3.2.0"
-    sharp "0.25.3"
+    sharp "0.25.4"
     webpack-merge "4.2.2"
     webpack-shell-plugin "0.5.0"
 

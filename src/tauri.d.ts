@@ -1,28 +1,28 @@
-declare module 'tauri/api/http' {
-  export const enum ResponseType {
-      Json = 1,
-      Text = 2,
-      Binary = 3,
+declare module 'tauri/api/fs' {
+  export const enum Dir {
+    Audio = 1,
+    Cache = 2,
+    Config = 3,
+    Data = 4,
+    LocalData = 5,
+    Desktop = 6,
+    Document = 7,
+    Download = 8,
+    Executable = 9,
+    Font = 10,
+    Home = 11,
+    Picture = 12,
+    Public = 13,
+    Runtime = 14,
+    Template = 15,
+    Video = 16,
+    Resource = 17,
+    App = 18
   }
-  export const enum BodyType {
-      Form = 1,
-      File = 2,
-      Auto = 3,
+  export interface Options {
+    dir: Dir
   }
-  type HttpOptions = {
-    method: string
-    url: string
-    headers?: object
-    properties?: object
-    body?: string | object | ArrayBuffer
-    followRedirects: boolean // whether to follow redirects or not
-    maxRedirections: number // max number of redirections
-    connectTimeout: number // request connect timeout
-    readTimeout: number // request read timeout
-    timeout: number // request timeout
-    allowCompression: boolean
-    responseType?: ResponseType
-    bodyType?: BodyType
-  }
-  export const get: (url: string, options?: Partial<HttpOptions>) => Promise<any>;
+  export function readTextFile (filePath: string, options?: Options): Promise<string>;
+  export function writeFile (file: { file: string, contents: string }, options?: Options): Promise<void>;
+  export function createDir (dir: string, options?: Options): Promise<void>;
 }

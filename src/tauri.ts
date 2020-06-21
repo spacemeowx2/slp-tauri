@@ -1,5 +1,7 @@
 /// <reference path='./tauri.d.ts'/>
 
+import { writeFile, Dir, readTextFile, createDir } from "tauri/api/fs"
+
 export const myCustomCommand = (argument: string): Promise<void> => {
   return window.tauri.promisified({
     cmd: 'myCustomCommand',
@@ -34,6 +36,23 @@ export const pollOutput = (): Promise<string> => {
   return window.tauri.promisified({
     cmd: 'pollOutput',
   })
+}
+
+export const writeConfig = async (cfg: any) => {
+  try {
+    await createDir('slp-tauri', { dir: Dir.LocalData })
+  } catch (e) {
+    console.log('failed to create dir, ignore', e)
+  }
+  await writeFile({ file: 'slp-tauri/config.json', contents: JSON.stringify(cfg, null, 2) }, {
+    dir: Dir.LocalData
+  })
+}
+
+export const readConfig = async () => {
+  return JSON.parse(await readTextFile('slp-tauri/config.json', {
+    dir: Dir.LocalData
+  }))
 }
 
 export interface ServerItem {

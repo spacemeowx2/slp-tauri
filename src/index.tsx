@@ -2,22 +2,25 @@ import React, { useState, useMemo, useEffect, useRef, Fragment, useCallback } fr
 import { render } from 'react-dom'
 import { ThemeProvider, Theme } from './css'
 import { Tabs } from './components/Tabs'
-import { useInput } from './hooks'
 import { Select } from './components/Select'
 import { run, kill, Status, getStatus, pollOutput, getServerList, ServerListResponse, ServerItem } from './tauri'
 import { Input } from './components/Input'
 import { ServerList } from './components/ServerList'
+import { withType, ConfigProvider } from './components/Config'
 
+interface Options {
+  serverSource: string
+  theme: string
+  // 127.0.0.1:1080
+  proxy: string
+  server: string
+}
+
+const { useConfigInput } = withType<Options>()
 const ServerListSource = [
   'https://switch-lan-play.github.io/server-list/server-list.json',
   'http://lan-play.com/data/servers.json'
 ]
-
-interface Options {
-  enableProxy: boolean
-  // 127.0.0.1:1080
-  proxy?: string
-}
 
 const Log: React.FC<{ log: string[] }> = ({ log }) => {
   const box = useRef<HTMLDivElement | null>()
@@ -68,10 +71,10 @@ const TestData: ServerItem[] = [{
 
 const Index: React.FC = () => {
   const [ err, setErr ] = useState('')
-  const [ theme, themeProps ] = useInput('xp')
-  const [ serverSource, serverSourceProps ] = useInput(ServerListSource[0])
-  const [ proxy, proxyProps ] = useInput('')
-  const [ server, serverProps ] = useInput('')
+  const [ theme, themeProps ] = useConfigInput('theme', 'xp')
+  const [ serverSource, serverSourceProps ] = useConfigInput('serverSource', ServerListSource[0])
+  const [ proxy, proxyProps ] = useConfigInput('proxy', '')
+  const [ server, serverProps ] = useConfigInput('server', '')
   const [ status, setStatus ] = useState<Status>({ status: 'ready' })
   const [ output, setOutput ] = useState<string[]>([])
   const [ fetch, { loading, data, error } ] = useGetServerList(serverSource)
@@ -162,4 +165,4 @@ const Index: React.FC = () => {
   </ThemeProvider>
 }
 
-render(<Index />, document.body)
+render(<ConfigProvider><Index /></ConfigProvider>, document.body)

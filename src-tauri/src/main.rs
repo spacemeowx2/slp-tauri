@@ -129,7 +129,7 @@ fn main() {
             let start = Instant::now();
             timeout(Duration::from_millis(500), socket.recv(&mut buf)).await??;
             json!(start.elapsed().as_millis() as i32)
-          }
+          },
         })
       }
     })
