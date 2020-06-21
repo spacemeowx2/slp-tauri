@@ -146,7 +146,7 @@ const Index: React.FC = () => {
               <p>lan-play {commandLine.join(' ')}</p>
             </fieldset>
           </Tabs.Item>
-          <Tabs.Item id='Output' hidden={false && status.status !== 'running'}>
+          <Tabs.Item id='Output' hidden={status.status !== 'running'}>
             <Log log={output}/>
           </Tabs.Item>
         </Tabs>
