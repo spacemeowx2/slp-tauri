@@ -9,37 +9,44 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-16.04
             lp: lan-play-linux
             lpbin: lan-play-x86_64-unknown-linux-gnu
             release: bundle/deb/slp-tauri_0.1.0_amd64.deb
-          - os: macOS-latest
+          - os: macOS-10.15
             lp: lan-play-macos
             lpbin: lan-play-x86_64-apple-darwin
             release: bundle/dmg/slp-tauri.dmg
-          - os: windows-latest
+          - os: windows-2016
             lp: lan-play-win64.exe
             lpbin: lan-play-x86_64-pc-windows-msvc.exe
             release: slp-tauri.x64.msi
 
     steps:
+      - uses: actions/checkout@v2
       # preparing cache
       - name: Cache Cargo bin
         uses: actions/cache@v1
         with:
-          path: ~/.cargo/
-          key: ${{ matrix.os }}-stable-cargo
+          path: ~/.cargo/bin/
+          key: ${{ matrix.os }}-stable-cargo-bin
       - name: Cache Cargo build
         uses: actions/cache@v1
         with:
-          path: target/
+          path: src-tauri/target/
           key: ${{ matrix.os }}-stable-target-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ matrix.os }}-stable-target-
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules/
+          key: ${{ matrix.os }}-stable-node_modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ matrix.os }}-stable-node_modules-
       # setup tools
-      - uses: actions/checkout@v2
       - name: install webkit2gtk (ubuntu only)
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-16.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y webkit2gtk-4.0
@@ -56,10 +63,16 @@ jobs:
       - run: yarn
       - uses: carlosperate/download-file-action@v1.0.3
         with:
-          file-url: https://github.com/spacemeowx2/switch-lan-play/releases/download/v0.2.2/${{ matrix.lp }}
+          file-url: https://github.com/spacemeowx2/switch-lan-play/releases/download/v0.2.3/${{ matrix.lp }}
           file-name: ${{ matrix.lpbin }}
           location: ./bin
+      - name: chmod +x ./bin/${{ matrix.lpbin }}
+        if: matrix.os != 'windows-2016'
+        run: chmod +x ./bin/${{ matrix.lpbin }}
+      # build
       - run: yarn tauri build
+        env:
+          MACOSX_DEPLOYMENT_TARGET: '10.14'
       - uses: actions/upload-artifact@v1
         with:
           name: slp-tauri-(${{ matrix.os }})
