@@ -50,7 +50,10 @@ export const ConfigProvider: React.FC = ({ children }) => {
   return <ConfigCtx.Provider value={useMemo(() => ({
     value: config,
     setConfig: (key, value) => setConfig(o => {
-      return Object.assign({}, o, { [key]: value })
+      return {
+        ...o,
+        [key]: value,
+      }
     })
   }), [config])}>
     { !loading && children }

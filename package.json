@@ -34,7 +34,8 @@
     "react-dom": "preact/compat"
   },
   "browserslist": [
-    "last 2 Chrome versions"
+    "last 2 Chrome versions",
+    "edge 14"
   ],
   "husky": {
     "hooks": {
