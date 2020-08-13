@@ -1,6 +1,6 @@
 {
   "build": {
-    "distDir": "../dist",
+    "distDir": "../build",
     "devPath": "http://localhost:14000",
     "beforeDevCommand": "",
     "beforeBuildCommand": "yarn run build"

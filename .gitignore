@@ -1,8 +1,6 @@
 /target
 node_modules
-/dist
-/.cache
-/.parcel-cache
+/build
 *.log
 /bin
 .DS_Store
