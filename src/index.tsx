@@ -1,16 +1,15 @@
+import './global.css'
 import React, { useState, useMemo, useEffect, useRef, Fragment, useCallback } from 'react'
 import { render } from 'react-dom'
-import { ThemeProvider, Theme } from './css'
-import { Tabs } from './components/Tabs'
-import { Select } from './components/Select'
 import { run, kill, Status, getStatus, pollOutput, getServerList, ServerListResponse, ServerItem } from './tauri'
-import { Input } from './components/Input'
 import { ServerList } from './components/ServerList'
 import { withType, ConfigProvider } from './components/Config'
+import { Pivot, PivotItem, ComboBox, TextField, DefaultButton, initializeIcons, PrimaryButton } from '@fluentui/react'
+
+initializeIcons()
 
 interface Options {
   serverSource: string
-  theme: string
   // 127.0.0.1:1080
   proxy: string
   server: string
@@ -31,7 +30,7 @@ const Log: React.FC<{ log: string[] }> = ({ log }) => {
   }, [ log, log.length ])
   return <>
     <div ref={r => box.current = r} style={{background: '#000', height: '100%', overflowY: 'auto', overflowX: 'hidden'}}>
-      <pre style={{height: '100%'}}>
+      <pre>
         {log.map((p, i) => <Fragment key={i}>{p}</Fragment>)}
       </pre>
     </div>
@@ -71,7 +70,6 @@ const TestData: ServerItem[] = [{
 
 const Index: React.FC = () => {
   const [ err, setErr ] = useState('')
-  const [ theme, themeProps ] = useConfigInput('theme', 'xp')
   const [ serverSource, serverSourceProps ] = useConfigInput('serverSource', ServerListSource[0])
   const [ proxy, proxyProps ] = useConfigInput('proxy', '')
   const [ server, serverProps ] = useConfigInput('server', '')
@@ -107,69 +105,50 @@ const Index: React.FC = () => {
     return argv
   }, [ proxy, server ])
 
-  return <ThemeProvider theme={theme as Theme}>
-    <div style={{ height: '100%', margin: '0'}} className='window'>
-      <div className='title-bar'>
-        <div className='title-bar-text'>Switch Lan Play</div>
-      </div>
-
-      <div className='window-body'>
-        <Tabs>
-          <Tabs.Item id='Server'>
-            { error && <p>Error: {error}</p>}
-            <p>{serverSource} <button onClick={fetch} disabled={loading}>{ loading ? 'Loading' : 'Fetch' }</button></p>
-            <ServerList serverList={data ? data.serverList : TestData} {...serverProps} />
-          </Tabs.Item>
-          <Tabs.Item id='Settings'>
-            <fieldset>
-              <legend>Theme</legend>
-              <label>Select a theme</label>
-              <Select options={['98', 'xp']} {...themeProps}/>
-            </fieldset>
-            <fieldset>
-              <legend>Server list</legend>
-              <label>Load server list from</label>
-              <Select options={ServerListSource} {...serverSourceProps}/>
-            </fieldset>
-            <fieldset>
-              <legend>Proxy</legend>
-              <p>You can set proxy here. Leave it empty to disable proxy.</p>
-              <p>Example: 127.0.0.1:1080</p>
-              <div className='field-row'>
-                <label>Proxy: </label>
-                <Input {...proxyProps} placeholder='Write proxy here' />
-              </div>
-            </fieldset>
-            <fieldset>
-              <legend>pmtu</legend>
-              {/* <div className='field-row'>
-                <label>pmtu: </label>
-                <Silder min='500' max='1000' {...pmtuProps} />
-              </div> */}
-            </fieldset>
-            <fieldset>
-              <legend>Debug</legend>
-              <label>Current command line options:</label>
-              <p>lan-play {commandLine.join(' ')}</p>
-            </fieldset>
-          </Tabs.Item>
-          <Tabs.Item id='Output' hidden={status.status !== 'running'}>
-            <Log log={output}/>
-          </Tabs.Item>
-        </Tabs>
-        <section className='field-row' style={{ justifyContent: 'flex-end' }}>
-          <p>{err}</p>
-          <button onClick={() => {
-            if (status.status === 'ready') {
-              run(commandLine).then(setStatus).then(() => setOutput([]), setErr)
-            } else {
-              kill().then(setStatus, setErr)
-            }
-          }}>{status.status === 'ready' ? 'Run' : 'Stop'}</button>
-        </section>
-      </div>
+  return <div className='window'>
+    <div className='window-body'>
+      <Pivot>
+        <PivotItem headerText='Server'>
+          { error && <p>Error: {error}</p>}
+          <p>{serverSource} <DefaultButton onClick={fetch} disabled={loading}>{ loading ? 'Loading' : 'Fetch' }</DefaultButton></p>
+          <ServerList serverList={data ? data.serverList : TestData} {...serverProps} />
+        </PivotItem>
+        <PivotItem headerText='Settings'>
+          <ComboBox
+            label='Server List'
+            allowFreeform
+            options={ServerListSource.map(i => ({key: i, text: i}))}
+            selectedKey={serverSourceProps.value}
+            onChange={(_, { key }) => serverSourceProps.onChange(key as string)}
+          />
+          <TextField
+            label='Proxy'
+            placeholder='127.0.0.1:1080'
+            value={proxyProps.value}
+            onChange={(_, v) => proxyProps.onChange(v)}
+          />
+          <TextField
+            readOnly
+            label='Debug(Current command line options:)'
+            value={`lan-play ${commandLine.join(' ')}`}
+          />
+        </PivotItem>
+        { status.status === 'running' && <PivotItem headerText='Output'>
+          <Log log={output}/>
+        </PivotItem> }
+      </Pivot>
     </div>
-  </ThemeProvider>
+    <section className='bottom'>
+      { err && <p>{err}</p> }
+      <PrimaryButton onClick={() => {
+        if (status.status === 'ready') {
+          run(commandLine).then(setStatus).then(() => setOutput([]), setErr)
+        } else {
+          kill().then(setStatus, setErr)
+        }
+      }}>{status.status === 'ready' ? 'Run' : 'Stop'}</PrimaryButton>
+    </section>
+  </div>
 }
 
 render(<ConfigProvider><Index /></ConfigProvider>, document.getElementById('app'))

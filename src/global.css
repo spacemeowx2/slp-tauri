@@ -1,3 +1,6 @@
+html , body , #app , .window {
+  height: 100%;
+}
 body {
   padding: 0;
   margin: 0;
@@ -8,20 +11,37 @@ body {
   display: flex;
   flex-direction: column;
 }
-summary::-webkit-details-marker {
-  display: none;
-}
 .window-body {
   height: 0;
   flex: auto;
   display: flex;
   flex-direction: column;
+  padding: 8px;
 }
-article[role=tabpanel] {
+.window > .bottom {
+  justify-content: flex-end;
+  padding: 8px;
+  display: flex;
+  flex-direction: row;
+}
+
+/* make tab auto sized */
+pre {
+  color: #fff;
+  box-sizing: border-box;
+}
+div[role="toolbar"] {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+div[role="tablist"] {
+  flex: none;
+}
+div[role="tabpanel"] {
   height: 0;
   flex: auto;
-  position: relative;
 }
-pre {
-  box-sizing: border-box;
+div[role="tabpanel"] > div {
+  height: 100%;
 }

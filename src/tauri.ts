@@ -1,6 +1,14 @@
 /// <reference path='./tauri.d.ts'/>
-
 import { writeFile, Dir, readTextFile, createDir } from "tauri/api/fs"
+
+if (!window.tauri) {
+  // @ts-ignore
+  window.tauri = {
+    async promisified (args: any) {
+      throw new Error('not implement')
+    }
+  }
+}
 
 export const myCustomCommand = (argument: string): Promise<void> => {
   return window.tauri.promisified({
