@@ -4,34 +4,23 @@
   "main": "dist/index.html",
   "license": "MIT",
   "scripts": {
-    "dev": "parcel -p 4000 src/index.html",
-    "build": "parcel build src/index.html --public-url ./",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "icon": "tauri icon -l -i ./icon.png"
   },
   "dependencies": {
     "98.css": "^0.1.16",
     "@types/react": "^16.9.13",
     "@types/react-dom": "^16.9.4",
-    "@typescript-eslint/eslint-plugin": "^2.9.0",
-    "@typescript-eslint/parser": "^2.9.0",
-    "eslint": "^6.7.1",
-    "eslint-config-react-app": "^5.0.2",
-    "eslint-plugin-flowtype": "^4.5.2",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.16.0",
-    "eslint-plugin-react-hooks": "^2.3.0",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
-    "parcel": "^2.0.0-nightly.277",
     "preact": "^10.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.0",
     "tauri": "^0.7.0",
     "typescript": "^3.9.3",
     "xp.css": "^0.2.3"
-  },
-  "alias": {
-    "react": "preact/compat",
-    "react-dom": "preact/compat"
   },
   "browserslist": [
     "last 2 Chrome versions",

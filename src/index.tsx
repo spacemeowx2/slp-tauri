@@ -141,6 +141,13 @@ const Index: React.FC = () => {
               </div>
             </fieldset>
             <fieldset>
+              <legend>pmtu</legend>
+              {/* <div className='field-row'>
+                <label>pmtu: </label>
+                <Silder min='500' max='1000' {...pmtuProps} />
+              </div> */}
+            </fieldset>
+            <fieldset>
               <legend>Debug</legend>
               <label>Current command line options:</label>
               <p>lan-play {commandLine.join(' ')}</p>
@@ -165,4 +172,4 @@ const Index: React.FC = () => {
   </ThemeProvider>
 }
 
-render(<ConfigProvider><Index /></ConfigProvider>, document.body)
+render(<ConfigProvider><Index /></ConfigProvider>, document.getElementById('app'))

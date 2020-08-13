@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 // @ts-ignore
-import css98 from 'bundle-text:xp.css/dist/98.css'
+import css98 from 'xp.css/dist/98.css'
 // @ts-ignore
-import cssxp from 'bundle-text:xp.css/dist/XP.css'
+import cssxp from 'xp.css/dist/XP.css'
 // @ts-ignore
-import globalCss from 'bundle-text:./global.css'
+import globalCss from './global.css'
 
 insertStyle(globalCss)
 
