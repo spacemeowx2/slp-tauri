@@ -1,25 +1,14 @@
 import './global.css'
-import React, { useState, useMemo, useEffect, useRef, Fragment, useCallback } from 'react'
+import React, { useState, useMemo, useEffect, useRef, Fragment } from 'react'
 import { render } from 'react-dom'
-import { run, kill, Status, getStatus, pollOutput, getServerList, ServerListResponse, ServerItem } from './tauri'
-import { ServerList } from './components/ServerList'
-import { withType, ConfigProvider } from './components/Config'
-import { Pivot, PivotItem, ComboBox, TextField, DefaultButton, initializeIcons, PrimaryButton } from '@fluentui/react'
+import { run, kill, Status, getStatus, pollOutput } from './tauri'
+import { ConfigProvider } from './components/Config'
+import { Pivot, PivotItem, ComboBox, TextField, initializeIcons, PrimaryButton } from '@fluentui/react'
+import { Proxy } from './pages/Proxy'
+import { Server } from './pages/Server'
+import { useConfigInput, ServerListSource } from './cfg'
 
 initializeIcons()
-
-interface Options {
-  serverSource: string
-  // 127.0.0.1:1080
-  proxy: string
-  server: string
-}
-
-const { useConfigInput } = withType<Options>()
-const ServerListSource = [
-  'https://switch-lan-play.github.io/server-list/server-list.json',
-  'http://lan-play.com/data/servers.json'
-]
 
 const Log: React.FC<{ log: string[] }> = ({ log }) => {
   const box = useRef<HTMLDivElement | null>()
@@ -37,45 +26,14 @@ const Log: React.FC<{ log: string[] }> = ({ log }) => {
   </>
 }
 
-const useGetServerList = (url: string) => {
-  const [ loading, setLoading ] = useState(false)
-  const [ data, setData ] = useState<ServerListResponse>(undefined)
-  const [ error, setError ] = useState(undefined)
-  const fetch = useCallback(() => {
-    setError(undefined)
-    setLoading(true)
-    getServerList(url)
-      .then(setData, (e) => {
-        console.error(e)
-        setError(e.toString())
-      })
-      .then(() => setLoading(false))
-  }, [ url ])
-  return [fetch, {
-    data,
-    loading,
-    error,
-  }] as const
-}
-
-const TestData: ServerItem[] = [{
-  name: 'localhost',
-  ip: 'localhost',
-  port: 11451,
-}, {
-  name: 'Test',
-  ip: 'switch.lan-play.com',
-  port: 11451,
-}]
 
 const Index: React.FC = () => {
   const [ err, setErr ] = useState('')
-  const [ serverSource, serverSourceProps ] = useConfigInput('serverSource', ServerListSource[0])
+  const [ , serverSourceProps ] = useConfigInput('serverSource', ServerListSource[0])
   const [ proxy, proxyProps ] = useConfigInput('proxy', '')
-  const [ server, serverProps ] = useConfigInput('server', '')
+  const [ server ] = useConfigInput('server', '')
   const [ status, setStatus ] = useState<Status>({ status: 'ready' })
   const [ output, setOutput ] = useState<string[]>([])
-  const [ fetch, { loading, data, error } ] = useGetServerList(serverSource)
   const appendOutput = (v: string) => {
     if (v) {
       setOutput(p => [...p, v])
@@ -109,9 +67,10 @@ const Index: React.FC = () => {
     <div className='window-body'>
       <Pivot>
         <PivotItem headerText='Server'>
-          { error && <p>Error: {error}</p>}
-          <p>{serverSource} <DefaultButton onClick={fetch} disabled={loading}>{ loading ? 'Loading' : 'Fetch' }</DefaultButton></p>
-          <ServerList serverList={data ? data.serverList : TestData} {...serverProps} />
+          <Server />
+        </PivotItem>
+        <PivotItem headerText='Proxy'>
+          <Proxy />
         </PivotItem>
         <PivotItem headerText='Settings'>
           <ComboBox

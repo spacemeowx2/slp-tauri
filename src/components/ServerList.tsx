@@ -1,5 +1,5 @@
-import React from 'react'
-import { ServerItem } from '../tauri'
+import React, { useMemo, useState, useEffect } from 'react'
+import { ServerItem, ping as pingServer } from '../tauri'
 import { List, mergeStyleSets, getFocusStyle, getTheme, Icon } from '@fluentui/react'
 
 const theme = getTheme()
@@ -16,6 +16,7 @@ const classNames = mergeStyleSets({
       selectors: {
         '&:hover': { background: palette.neutralLight },
       },
+      cursor: 'pointer',
     },
   ],
   itemImage: {
@@ -50,38 +51,29 @@ const classNames = mergeStyleSets({
 
 type ServerProps = {
   server: ServerItem
+  checked: boolean
+  onClick: () => void
 }
 
-
-export const Server: React.FC<ServerProps> = ({ server }) => {
-  // const [ open, setOpen ] = useState(false)
-  // const [ ping, setPing ] = useState(-1)
-  // useInterval(useCallback(async () => {
-  //   const addr = `${server.ip}:${server.port}`
-  //   setPing(await pingServer(addr))
-  // }, [server.ip, server.port]), 5 * 1000, open)
+export const Server: React.FC<ServerProps> = ({ server, onClick, checked }) => {
+  const [ ping, setPing ] = useState(-1)
+  useEffect(() => {
+    const id = setInterval(async () => {
+      const addr = `${server.ip}:${server.port}`
+      setPing(await pingServer(addr))
+    }, 5 * 1000)
+    return () => clearInterval(id)
+  }, [ server.ip, server.port ])
 
   return <>
-    <div className={classNames.itemCell} data-is-focusable={true}>
+    <div className={classNames.itemCell} data-is-focusable={true} onClick={onClick}>
       <div className={classNames.itemContent}>
         <div className={classNames.itemName}>{server.ip}</div>
-        <div className={classNames.itemIndex}>{`Port ${server.port}`}</div>
+        <div className={classNames.itemIndex}>{`Port ${server.port} Ping ${ping}`}</div>
         <div>{server.name}</div>
       </div>
-      <Icon className={classNames.chevron} iconName={'ChevronRight'} />
+      { checked && <Icon className={classNames.chevron} iconName={'CheckMark'} /> }
     </div>
-    {/* <li>
-      <details open={open}>
-        <summary onClick={(e) => {
-          setOpen(i => !i)
-          e.stopPropagation()
-          e.preventDefault()
-        }}>{server.name} ({server.ip}:{server.port})</summary>
-        { open && <ul>
-          <li>Ping: {ping}</li>
-        </ul> }
-      </details>
-    </li> */}
   </>
 }
 
@@ -91,11 +83,25 @@ type ServerListProps = {
   onChange: (value: string) => void
 }
 
+const key = (i: ServerItem) => `${i.ip}:${i.port}`
 
-export const ServerList: React.FC<ServerListProps> = ({ serverList }) => {
+export const ServerList: React.FC<ServerListProps> = ({ serverList, value, onChange }) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const items = useMemo(() => serverList.slice(), [ value, serverList ])
   return <>
-    <List items={serverList} onRenderCell={(item) => {
-      return <Server server={item} />
-    }} />
+    <List
+      items={items}
+      onRenderCell={(item) => {
+        const k = key(item)
+        return <Server
+          key={k}
+          checked={k === value}
+          onClick={() => {
+            onChange(k)
+          }}
+          server={item}
+        />
+      }}
+    />
   </>
 }
