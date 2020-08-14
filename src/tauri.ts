@@ -1,17 +1,13 @@
 /// <reference path='./tauri.d.ts'/>
 import { writeFile, Dir, readTextFile, createDir } from "tauri/api/fs"
+import { promisified as tauriPromisified } from 'tauri/api/tauri'
 
-if (!window.tauri) {
-  // @ts-ignore
-  window.tauri = {
-    async promisified (args: any) {
-      throw new Error('not implement')
-    }
-  }
+const promisified = async (args: any): Promise<any> => {
+  return JSON.parse(await tauriPromisified(args))
 }
 
 export const myCustomCommand = (argument: string): Promise<void> => {
-  return window.tauri.promisified({
+  return promisified({
     cmd: 'myCustomCommand',
     argument,
   })
@@ -22,26 +18,26 @@ export interface Status {
 }
 
 export const run = (args: string[]): Promise<Status> => {
-  return window.tauri.promisified({
+  return promisified({
     cmd: 'run',
     arguments: args,
   })
 }
 
 export const kill = (): Promise<Status> => {
-  return window.tauri.promisified({
+  return promisified({
     cmd: 'kill',
   })
 }
 
 export const getStatus = (): Promise<Status> => {
-  return window.tauri.promisified({
+  return promisified({
     cmd: 'getStatus',
   })
 }
 
 export const pollOutput = (): Promise<string> => {
-  return window.tauri.promisified({
+  return promisified({
     cmd: 'pollOutput',
   })
 }
@@ -52,7 +48,7 @@ export const writeConfig = async (cfg: any) => {
   } catch (e) {
     console.log('failed to create dir, ignore', e)
   }
-  await writeFile({ file: 'slp-tauri/config.json', contents: JSON.stringify(cfg, null, 2) }, {
+  await writeFile({ path: 'slp-tauri/config.json', contents: JSON.stringify(cfg, null, 2) }, {
     dir: Dir.LocalData
   })
 }
@@ -73,7 +69,7 @@ export interface ServerListResponse {
   serverList: ServerItem[]
 }
 export const get = async (url: string): Promise<string> => {
-  return await window.tauri.promisified({
+  return await promisified({
     cmd: 'get',
     url,
   })
@@ -92,7 +88,7 @@ export const getServerList = async (url: string): Promise<ServerListResponse> =>
   return data
 }
 export const ping = async (server: string): Promise<number> => {
-  return JSON.parse(await window.tauri.promisified({
+  return JSON.parse(await promisified({
     cmd: 'ping',
     server,
   }))
@@ -104,7 +100,7 @@ export interface Config {
   serverList: string
 }
 export const saveConfig = () => {
-  return window.tauri.promisified({
+  return promisified({
     cmd: 'saveConfig',
   })
 }

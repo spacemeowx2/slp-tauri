@@ -23,6 +23,6 @@ declare module 'tauri/api/fs' {
     dir: Dir
   }
   export function readTextFile (filePath: string, options?: Options): Promise<string>;
-  export function writeFile (file: { file: string, contents: string }, options?: Options): Promise<void>;
+  export function writeFile (file: { path: string, contents: string }, options?: Options): Promise<void>;
   export function createDir (dir: string, options?: Options): Promise<void>;
 }

@@ -34,6 +34,7 @@ const Index: React.FC = () => {
   const [ server ] = useConfigInput('server', '')
   const [ status, setStatus ] = useState<Status>({ status: 'ready' })
   const [ output, setOutput ] = useState<string[]>([])
+  console.log('status', typeof status, status.status === 'ready')
   const appendOutput = (v: string) => {
     if (v) {
       setOutput(p => [...p, v])
@@ -98,7 +99,7 @@ const Index: React.FC = () => {
       </Pivot>
     </div>
     <section className='bottom'>
-      { err && <p>{err}</p> }
+      { err && <p>{String(err)}</p> }
       <PrimaryButton onClick={() => {
         if (status.status === 'ready') {
           run(commandLine).then(setStatus).then(() => setOutput([]), setErr)
