@@ -20,7 +20,7 @@ jobs:
           - os: windows-2016
             lp: lan-play-win64.exe
             lpbin: lan-play-x86_64-pc-windows-msvc.exe
-            release: slp-tauri.x64.msi
+            release: bundle/msi/slp-tauri_0.1.0_x64.msi
 
     steps:
       - uses: actions/checkout@v2
