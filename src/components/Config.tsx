@@ -56,7 +56,7 @@ export const ConfigProvider: React.FC = ({ children }) => {
       }
     })
   }), [config])}>
-    { !loading && children }
+    { loading ? <>Loading...</> : children }
   </ConfigCtx.Provider>
 }
 

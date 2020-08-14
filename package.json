@@ -20,7 +20,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.0",
-    "tauri": "^0.7.0",
+    "tauri": "^0.11.1",
     "typescript": "^3.9.3",
     "xp.css": "^0.2.3"
   },
