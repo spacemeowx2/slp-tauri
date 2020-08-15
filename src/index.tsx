@@ -3,8 +3,7 @@ import React, { useState, useMemo, useEffect, useRef, Fragment } from 'react'
 import { render } from 'react-dom'
 import { run, kill, Status, getStatus, pollOutput } from './tauri'
 import { ConfigProvider } from './components/Config'
-import { Pivot, PivotItem, initializeIcons, PrimaryButton } from '@fluentui/react'
-import { Proxy } from './pages/Proxy'
+import { Pivot, PivotItem, initializeIcons, PrimaryButton, Label } from '@fluentui/react'
 import { Server } from './pages/Server'
 import { useConfigInput } from './cfg'
 import { LangProvider, useLang } from './lang'
@@ -33,6 +32,7 @@ const Index: React.FC = () => {
   const [ err, setErr ] = useState('')
   const [ proxy ] = useConfigInput('proxy', '')
   const [ server ] = useConfigInput('server', '')
+  const [ debug, { onChange: setDebug } ] = useConfigInput('debug', false)
   const [ status, setStatus ] = useState<Status>({ status: 'ready' })
   const [ output, setOutput ] = useState<string[]>([])
   const { t } = useLang()
@@ -71,19 +71,17 @@ const Index: React.FC = () => {
         <PivotItem headerText={t('server')}>
           <Server />
         </PivotItem>
-        <PivotItem headerText={t('proxy')}>
-          <Proxy />
-        </PivotItem>
         <PivotItem headerText={t('settings')}>
-          <Settings commandLine={commandLine} />
+          <Settings />
         </PivotItem>
         { status.status === 'running' && <PivotItem headerText={t('output')}>
           <Log log={output}/>
         </PivotItem> }
       </Pivot>
     </div>
-    <section className='bottom'>
+    <section className='bottom' onDoubleClick={() => setDebug(!debug)}>
       { err && <p>{String(err)}</p> }
+      { debug && <Label disabled style={{margin: 5}}>lan-play {commandLine}</Label> }
       <PrimaryButton onClick={() => {
         if (status.status === 'ready') {
           run(commandLine).then(setStatus).then(() => setOutput([]), setErr)

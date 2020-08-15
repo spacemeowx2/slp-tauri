@@ -5,11 +5,13 @@ export default {
   'loading': '载入中...',
   'fetch': '获取',
   'server': '服务器',
-  'proxy': '代理',
+  'proxy': 'Socks5 代理',
   'settings': '设置',
   'run': '运行',
   'stop': '停止',
   'output': '输出',
   'server-list': '服务器列表',
   'debug': '当前命令行参数(调试用):',
+
+  'add': '新建',
 }

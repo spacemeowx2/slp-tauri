@@ -3,7 +3,7 @@ import { ComboBox, TextField, Dropdown } from '@fluentui/react'
 import { ServerListSource, useConfigInput } from '../cfg'
 import { useLang, LangOptions, DefaultLang } from '../lang'
 
-export const Settings: React.FC<{ commandLine: string[] }> = ({ commandLine }) => {
+export const Settings: React.FC = () => {
   const [ , serverSourceProps ] = useConfigInput('serverSource', ServerListSource[0])
   const [ , proxyProps ] = useConfigInput('proxy', '')
   const [ , languageProps ] = useConfigInput('language', DefaultLang)
@@ -28,12 +28,6 @@ export const Settings: React.FC<{ commandLine: string[] }> = ({ commandLine }) =
       placeholder='127.0.0.1:1080'
       value={proxyProps.value}
       onChange={(_, v) => proxyProps.onChange(v)}
-    />
-
-    <TextField
-      readOnly
-      label={t('debug')}
-      value={`lan-play ${commandLine.join(' ')}`}
     />
   </>
 }

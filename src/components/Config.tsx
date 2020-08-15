@@ -69,6 +69,11 @@ export const withType = <T extends {}>() => {
     const onChange = useCallback((v: T[K]) => {
       ctx.setConfig(key, v)
     }, [ ctx, key ])
+    useEffect(() => {
+      if (v === undefined && defaultValue !== undefined) {
+        onChange(defaultValue)
+      }
+    }, [ defaultValue, onChange, v ])
     return [ value, {
       value,
       onChange,

@@ -16,7 +16,7 @@ body {
   flex: auto;
   display: flex;
   flex-direction: column;
-  padding: 8px;
+  /* padding: 8px; */
 }
 .window > .bottom {
   justify-content: flex-end;
@@ -43,5 +43,8 @@ div[role="tabpanel"] {
   flex: auto;
 }
 div[role="tabpanel"] > div {
+  box-sizing: border-box;
+  padding: 8px;
   height: 100%;
+  overflow-y: auto;
 }
