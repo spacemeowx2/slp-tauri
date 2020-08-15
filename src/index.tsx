@@ -3,10 +3,12 @@ import React, { useState, useMemo, useEffect, useRef, Fragment } from 'react'
 import { render } from 'react-dom'
 import { run, kill, Status, getStatus, pollOutput } from './tauri'
 import { ConfigProvider } from './components/Config'
-import { Pivot, PivotItem, ComboBox, TextField, initializeIcons, PrimaryButton } from '@fluentui/react'
+import { Pivot, PivotItem, initializeIcons, PrimaryButton } from '@fluentui/react'
 import { Proxy } from './pages/Proxy'
 import { Server } from './pages/Server'
-import { useConfigInput, ServerListSource } from './cfg'
+import { useConfigInput } from './cfg'
+import { LangProvider, useLang } from './lang'
+import { Settings } from './pages/Settings'
 
 initializeIcons()
 
@@ -29,12 +31,11 @@ const Log: React.FC<{ log: string[] }> = ({ log }) => {
 
 const Index: React.FC = () => {
   const [ err, setErr ] = useState('')
-  const [ , serverSourceProps ] = useConfigInput('serverSource', ServerListSource[0])
-  const [ proxy, proxyProps ] = useConfigInput('proxy', '')
+  const [ proxy ] = useConfigInput('proxy', '')
   const [ server ] = useConfigInput('server', '')
   const [ status, setStatus ] = useState<Status>({ status: 'ready' })
   const [ output, setOutput ] = useState<string[]>([])
-  console.log('status', typeof status, status.status === 'ready')
+  const { t } = useLang()
   const appendOutput = (v: string) => {
     if (v) {
       setOutput(p => [...p, v])
@@ -67,33 +68,16 @@ const Index: React.FC = () => {
   return <div className='window'>
     <div className='window-body'>
       <Pivot>
-        <PivotItem headerText='Server'>
+        <PivotItem headerText={t('server')}>
           <Server />
         </PivotItem>
-        <PivotItem headerText='Proxy'>
+        <PivotItem headerText={t('proxy')}>
           <Proxy />
         </PivotItem>
-        <PivotItem headerText='Settings'>
-          <ComboBox
-            label='Server List'
-            allowFreeform
-            options={ServerListSource.map(i => ({key: i, text: i}))}
-            selectedKey={serverSourceProps.value}
-            onChange={(_, { key }) => serverSourceProps.onChange(key as string)}
-          />
-          <TextField
-            label='Proxy'
-            placeholder='127.0.0.1:1080'
-            value={proxyProps.value}
-            onChange={(_, v) => proxyProps.onChange(v)}
-          />
-          <TextField
-            readOnly
-            label='Debug(Current command line options:)'
-            value={`lan-play ${commandLine.join(' ')}`}
-          />
+        <PivotItem headerText={t('settings')}>
+          <Settings commandLine={commandLine} />
         </PivotItem>
-        { status.status === 'running' && <PivotItem headerText='Output'>
+        { status.status === 'running' && <PivotItem headerText={t('output')}>
           <Log log={output}/>
         </PivotItem> }
       </Pivot>
@@ -106,9 +90,15 @@ const Index: React.FC = () => {
         } else {
           kill().then(setStatus, setErr)
         }
-      }}>{status.status === 'ready' ? 'Run' : 'Stop'}</PrimaryButton>
+      }}>{status.status === 'ready' ? t('run') : t('stop')}</PrimaryButton>
     </section>
   </div>
 }
 
-render(<ConfigProvider><Index /></ConfigProvider>, document.getElementById('app'))
+render(<>
+  <ConfigProvider>
+    <LangProvider>
+        <Index />
+    </LangProvider>
+  </ConfigProvider>
+</>, document.getElementById('app'))

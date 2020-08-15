@@ -2,6 +2,7 @@ import { withType } from './components/Config'
 import { ServerItem } from './tauri'
 
 export interface Options {
+  language: string
   serverSource: string
   // 127.0.0.1:1080
   proxy: string

@@ -3,6 +3,7 @@ import { DefaultButton } from '@fluentui/react'
 import { ServerList } from '../components/ServerList'
 import { ServerItem, ServerListResponse, getServerList } from '../tauri'
 import { useConfigInput, ServerListSource } from '../cfg'
+import { useLang } from '../lang'
 
 const TestData: ServerItem[] = [{
   name: 'localhost',
@@ -39,9 +40,10 @@ export const Server: React.FC = () => {
   const [ serverSource ] = useConfigInput('serverSource', ServerListSource[0])
   const [ fetch, { loading, data, error } ] = useGetServerList(serverSource)
   const [ , serverProps ] = useConfigInput('server', '')
+  const { t } = useLang()
   return <>
     { error && <p>Error: {error}</p>}
-    <p>{serverSource} <DefaultButton onClick={fetch} disabled={loading}>{ loading ? 'Loading' : 'Fetch' }</DefaultButton></p>
+    <p>{serverSource} <DefaultButton onClick={fetch} disabled={loading}>{ loading ? t('loading') : t('fetch') }</DefaultButton></p>
     <ServerList serverList={data ? data.serverList : TestData} {...serverProps} />
   </>
 }

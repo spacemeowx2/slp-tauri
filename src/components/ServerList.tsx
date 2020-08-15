@@ -58,10 +58,12 @@ type ServerProps = {
 export const Server: React.FC<ServerProps> = ({ server, onClick, checked }) => {
   const [ ping, setPing ] = useState(-1)
   useEffect(() => {
-    const id = setInterval(async () => {
+    const cb = async () => {
       const addr = `${server.ip}:${server.port}`
       setPing(await pingServer(addr))
-    }, 5 * 1000)
+    }
+    cb()
+    const id = setInterval(cb, 5 * 1000)
     return () => clearInterval(id)
   }, [ server.ip, server.port ])
 
