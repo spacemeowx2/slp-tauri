@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
-import { DefaultButton, PrimaryButton, TextField } from '@fluentui/react'
-import { ServerList } from '../components/ServerList'
+import { DefaultButton, PrimaryButton, TextField, Stack } from '@fluentui/react'
+import { ServerList, key } from '../components/ServerList'
 import { getServerList, ServerItem } from '../tauri'
 import { useConfigInput, ServerListSource } from '../cfg'
 import { useLang } from '../lang'
@@ -34,6 +34,21 @@ const AddBtn: React.FC<{ onAdd: (server: ServerItem) => void }> = ({ onAdd }) =>
     { dialog }
   </>
 }
+const DelBtn: React.FC<{ onDel: () => void, disabled: boolean }> = ({ onDel, disabled }) => {
+  const { t } = useLang()
+  const { dialog, open } = useDialog({
+    title: t('del-server'),
+    subText: t('del-server-confirm'),
+    onOK: () => {
+      onDel()
+    }
+  })
+
+  return <>
+    <DefaultButton disabled={disabled} onClick={open}>{t('del')}</DefaultButton>
+    { dialog }
+  </>
+}
 
 export const Server: React.FC = () => {
   const [ serverSource ] = useConfigInput('serverSource', ServerListSource[0])
@@ -51,7 +66,7 @@ export const Server: React.FC = () => {
       setLoading(false)
     }
   }, [])
-  const [ , serverProps ] = useConfigInput('server', '')
+  const [ server, serverProps ] = useConfigInput('server', '')
   const { t } = useLang()
   const [ localServer, { onChange: setLocalServer } ] = useConfigInput('localServer', [])
   const [ remoteServer, { onChange: setRemoteServer } ] = useConfigInput('remoteServer', [])
@@ -59,14 +74,22 @@ export const Server: React.FC = () => {
   const addServer = (server: ServerItem) => {
     setLocalServer([server, ...localServer])
   }
+  const delServer = () => {
+    setLocalServer(localServer.filter(i => key(i) !== server))
+    setRemoteServer(remoteServer.filter(i => key(i) !== server))
+    serverProps.onChange('')
+  }
 
   return <>
     { error && <>{String(error)}</>}
-    <AddBtn onAdd={addServer} />
-    <p><DefaultButton onClick={async () => {
-      const list = await fetchRemote(serverSource)
-      setRemoteServer(list)
-    }} disabled={loading}>{ loading ? t('loading') : t('fetch') }</DefaultButton></p>
+    <Stack horizontal tokens={{ childrenGap: 10 }}>
+      <AddBtn onAdd={addServer} />
+      <DelBtn onDel={delServer} disabled={server === ''} />
+      <DefaultButton onClick={async () => {
+        const list = await fetchRemote(serverSource)
+        setRemoteServer(list)
+      }} disabled={loading}>{ loading ? t('loading') : t('fetch') }</DefaultButton>
+    </Stack>
     <ServerList serverList={serverList} {...serverProps} />
   </>
 }

@@ -1,4 +1,4 @@
-export default {
+const d = {
   'display': 'English',
   'language': 'Language',
 
@@ -19,4 +19,9 @@ export default {
 
   'add': 'Add',
   'add-server': 'Add server',
+  'del': 'Delete',
+  'del-server': 'Delete server',
+  'del-server-confirm': 'Are you sure to delete server?',
 }
+
+export default d

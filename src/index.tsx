@@ -81,7 +81,7 @@ const Index: React.FC = () => {
     </div>
     <section className='bottom' onDoubleClick={() => setDebug(!debug)}>
       { err && <p>{String(err)}</p> }
-      { debug && <Label disabled style={{margin: 5}}>lan-play {commandLine}</Label> }
+      { debug && <Label disabled style={{margin: 5}}>lan-play {commandLine.join(' ')}</Label> }
       <PrimaryButton onClick={() => {
         if (status.status === 'ready') {
           run(commandLine).then(setStatus).then(() => setOutput([]), setErr)

@@ -85,7 +85,7 @@ type ServerListProps = {
   onChange: (value: string) => void
 }
 
-const key = (i: ServerItem) => `${i.ip}:${i.port}`
+export const key = (i: ServerItem) => `${i.ip}:${i.port}`
 
 export const ServerList: React.FC<ServerListProps> = ({ serverList, value, onChange }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
