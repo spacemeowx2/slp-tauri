@@ -47,12 +47,9 @@ fn main() {
         let mut status = status_ref.lock().await;
 
         Ok(match cmd {
-          MyCustomCommand{ argument } => {
-            println!("arg {}", argument);
-            let world = "world";
-            json!({
-              "hello": world
-            })
+          Print{ argument } => {
+            println!("Print {}", argument);
+            json!(null)
           }
           Run { arguments } => {
             let path = command_path(binary_command("lan-play".to_string())?)?;

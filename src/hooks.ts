@@ -5,6 +5,8 @@ export const useInput = <T>(initialValue: T) => {
   return [ value, {
     value,
     onChange: (_: any, v: T) => setValue(v)
+  }, {
+    setValue
   }] as const
 }
 
@@ -14,5 +16,7 @@ export const useInputWithRule = (initialValue: string, rule: RegExp, err: string
     value,
     onChange: (_: any, v: string) => setValue(v),
     errorMessage: (value.length === 0 || rule.test(value)) ? undefined : err
+  }, {
+    setValue
   }] as const
 }

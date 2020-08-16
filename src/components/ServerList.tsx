@@ -70,9 +70,9 @@ export const Server: React.FC<ServerProps> = ({ server, onClick, checked }) => {
   return <>
     <div className={classNames.itemCell} data-is-focusable={true} onClick={onClick}>
       <div className={classNames.itemContent}>
-        <div className={classNames.itemName}>{server.ip}</div>
-        <div className={classNames.itemIndex}>{`Port ${server.port} Ping ${ping}`}</div>
-        <div>{server.name}</div>
+        <div className={classNames.itemName}>{server.name ?? `${server.ip}:${server.port}`}</div>
+        <div className={classNames.itemIndex}>{`Ping ${ping}`}</div>
+        <div>{server.ip}:{server.port}</div>
       </div>
       { checked && <Icon className={classNames.chevron} iconName={'CheckMark'} /> }
     </div>

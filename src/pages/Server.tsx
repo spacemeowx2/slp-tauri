@@ -9,8 +9,8 @@ import { useInput, useInputWithRule } from '../hooks'
 
 const AddBtn: React.FC<{ onAdd: (server: ServerItem) => void }> = ({ onAdd }) => {
   const RE = /^([^:]+):(\d{1,5})$/
-  const [ name, nameProps ] = useInput('')
-  const [ address, addressProps ] = useInputWithRule('', RE, 'Invalid address. Example: switch.lan-play.com:11451')
+  const [ name, nameProps, { setValue: setName } ] = useInput('')
+  const [ address, addressProps, { setValue: setAddress } ] = useInputWithRule('', RE, 'Invalid address. Example: switch.lan-play.com:11451')
   const { t } = useLang()
   const { dialog, open } = useDialog({
     title: t('add-server'),
@@ -19,13 +19,17 @@ const AddBtn: React.FC<{ onAdd: (server: ServerItem) => void }> = ({ onAdd }) =>
       <TextField label={t('server-address')} {...addressProps} />
     </>,
     disabled: !name || !address || !RE.test(address),
-    onOK: () => {
+    onOK () {
       const [, ip, port] = RE.exec(address)
       onAdd({
         name,
         ip,
         port: parseInt(port, 10),
       })
+    },
+    beforeOpen () {
+      setName('')
+      setAddress('')
     }
   })
 

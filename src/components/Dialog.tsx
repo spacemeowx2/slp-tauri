@@ -2,8 +2,9 @@ import React, { useState, useCallback } from 'react'
 import { DefaultButton, PrimaryButton, Dialog, DialogType, DialogFooter } from '@fluentui/react'
 import { useLang } from '../lang'
 
-export const useDialog = ({ onOK, title, body, subText, disabled }: {
+export const useDialog = ({ onOK, title, body, subText, disabled, beforeOpen }: {
   onOK?: () => void | Promise<void>
+  beforeOpen?: () => void
   body?: React.ReactNode
   title?: string | React.ReactElement
   subText?: string
@@ -12,7 +13,10 @@ export const useDialog = ({ onOK, title, body, subText, disabled }: {
   const { t } = useLang()
   const [ hideDialog, setHideDialog ] = useState(true)
   const [ loading, setLoading ] = useState(false)
-  const open = useCallback(() => setHideDialog(false), [])
+  const open = useCallback(() => {
+    beforeOpen?.()
+    setHideDialog(false)
+  }, [ beforeOpen ])
   const close = useCallback(() => setHideDialog(true), [])
 
   return {

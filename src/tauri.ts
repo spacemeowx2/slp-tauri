@@ -6,9 +6,9 @@ const promisified = async (args: any): Promise<any> => {
   return JSON.parse(await tauriPromisified(args))
 }
 
-export const myCustomCommand = (argument: string): Promise<void> => {
+export const print = (argument: string): Promise<void> => {
   return promisified({
-    cmd: 'myCustomCommand',
+    cmd: 'print',
     argument,
   })
 }
@@ -76,7 +76,7 @@ export const get = async (url: string): Promise<string> => {
 }
 export const getServerList = async (url: string): Promise<ServerListResponse> => {
   const s: string = await get(url)
-  myCustomCommand(s)
+  print(s)
   const data = JSON.parse(s)
   // compatibility with lan-play.com
   if (Array.isArray(data)) {
