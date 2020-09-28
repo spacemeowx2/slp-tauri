@@ -16,7 +16,7 @@ jobs:
           - os: macOS-10.15
             lp: lan-play-macos
             lpbin: lan-play-x86_64-apple-darwin
-            release: bundle/dmg/slp-tauri.dmg
+            release: bundle/dmg/slp-tauri_0.1.0_x64.dmg
           - os: windows-2016
             lp: lan-play-win64.exe
             lpbin: lan-play-x86_64-pc-windows-msvc.exe
