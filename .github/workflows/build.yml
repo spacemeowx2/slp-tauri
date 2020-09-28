@@ -54,7 +54,7 @@ jobs:
         with:
           toolchain: stable
           override: true
-      - run: cargo install tauri-bundler --force
+      - run: cargo install tauri-bundler
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
