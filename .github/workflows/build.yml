@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-16.04
+          - os: ubuntu-18.04
             lp: lan-play-linux
             lpbin: lan-play-x86_64-unknown-linux-gnu
             release: bundle/deb/slp-tauri_0.1.0_amd64.deb
@@ -46,7 +46,7 @@ jobs:
             ${{ matrix.os }}-stable-node_modules-
       # setup tools
       - name: install webkit2gtk (ubuntu only)
-        if: matrix.os == 'ubuntu-16.04'
+        if: matrix.os == 'ubuntu-18.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y webkit2gtk-4.0
