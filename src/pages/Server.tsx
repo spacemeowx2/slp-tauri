@@ -61,6 +61,7 @@ export const Server: React.FC = () => {
   // const [ fetch, { loading, data, error } ] = useGetServerList(serverSource)
   const fetchRemote = useCallback(async (url: string) => {
     try {
+      setError('')
       setLoading(true)
       const resp = await getServerList(url)
       return resp.serverList
