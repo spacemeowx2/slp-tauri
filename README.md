@@ -13,6 +13,6 @@ yarn tauri build
 ## Development
 
 ```shell
-yarn run watch
+yarn dev
 yarn tauri dev
 ```
