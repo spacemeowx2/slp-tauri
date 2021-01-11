@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"98.css@^0.1.16":
-  version "0.1.16"
-  resolved "https://registry.npm.taobao.org/98.css/download/98.css-0.1.16.tgz#7e1d0ccf07e6c8ce69109fbb8fa5a530adab246d"
-  integrity sha1-fh0MzwfmyM5pEJ+7j6WlMK2rJG0=
-
 "@babel/code-frame@7.8.3":
   version "7.8.3"
   resolved "https://registry.npm.taobao.org/@babel/code-frame/download/@babel/code-frame-7.8.3.tgz#33e25903d7481181534e12ec0a25f16b6fcf419e"
@@ -13384,11 +13379,6 @@ xmlchars@^2.1.1, xmlchars@^2.2.0:
   version "2.2.0"
   resolved "https://registry.npm.taobao.org/xmlchars/download/xmlchars-2.2.0.tgz#060fe1bcb7f9c76fe2a17db86a9bc3ab894210cb"
   integrity sha1-Bg/hvLf5x2/ioX24apvDq4lCEMs=
-
-xp.css@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.npm.taobao.org/xp.css/download/xp.css-0.2.3.tgz#53de0ba7bdd657aaae36cd70e46ba265d7c9d840"
-  integrity sha1-U94Lp73WV6quNs1w5GuiZdfJ2EA=
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"

@@ -10,7 +10,6 @@
     "icon": "tauri icon -l -i ./icon.png"
   },
   "dependencies": {
-    "98.css": "^0.1.16",
     "@fluentui/react": "^7.128.0",
     "@types/react": "^16.9.13",
     "@types/react-dom": "^16.9.4",
@@ -20,8 +19,7 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.0",
     "tauri": "^0.12.0",
-    "typescript": "^3.9.3",
-    "xp.css": "^0.2.3"
+    "typescript": "^3.9.3"
   },
   "homepage": "./",
   "browserslist": [
